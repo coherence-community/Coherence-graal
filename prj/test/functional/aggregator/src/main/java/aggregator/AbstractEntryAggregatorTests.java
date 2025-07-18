@@ -276,7 +276,7 @@ public abstract class AbstractEntryAggregatorTests
         assertEquals(setExpected, setResult);
 
         cache.clear();
-        Eventually.assertThat(cache.size(), is(0));
+        Eventually.assertDeferred(cache::size, is(0));
         }
 
     /**
@@ -308,7 +308,7 @@ public abstract class AbstractEntryAggregatorTests
         assertTrue("Result=" + oResult, equals(oResult, 5.5D));
 
         cache.clear();
-        Eventually.assertThat(cache.size(), is(0));
+        Eventually.assertDeferred(cache::size, is(0));
         }
 
     /**
@@ -914,7 +914,7 @@ public abstract class AbstractEntryAggregatorTests
                 sExpectedMin.equals(personMin.getFirstName()));
 
         cache.clear();
-        Eventually.assertThat(cache.size(), is(0));
+        Eventually.assertDeferred(cache::size, is(0));
         }
 
     /**
@@ -1045,7 +1045,7 @@ public abstract class AbstractEntryAggregatorTests
             }
 
         cache.clear();
-        Eventually.assertThat(cache.size(), is(0));
+        Eventually.assertDeferred(cache::size, is(0));
         }
 
     /**
@@ -1097,7 +1097,7 @@ public abstract class AbstractEntryAggregatorTests
         assertEquals("Person2", results.get(2));
 
         cache.clear();
-        Eventually.assertThat(cache.size(), is(0));
+        Eventually.assertDeferred(cache::size, is(0));
         }
 
     /**
@@ -1265,7 +1265,7 @@ public abstract class AbstractEntryAggregatorTests
             }
 
         cache.clear();
-        Eventually.assertThat(cache.size(), is(0));
+        Eventually.assertDeferred(cache::size, is(0));
         }
 
     /**
@@ -1330,7 +1330,7 @@ public abstract class AbstractEntryAggregatorTests
         assertArrayEquals("Result=" + Arrays.toString(oResult), aoTop10, oResult);
 
         cache.clear();
-        Eventually.assertThat(cache.size(), is(0));
+        Eventually.assertDeferred(cache::size, is(0));
         }
 
 
@@ -1352,7 +1352,7 @@ public abstract class AbstractEntryAggregatorTests
         assertTrue("empty", F.booleanValue());
 
         cache.clear();
-        Eventually.assertThat(cache.size(), is(0));
+        Eventually.assertDeferred(cache::size, is(0));
         }
 
     public static class NotEmptyAggregator

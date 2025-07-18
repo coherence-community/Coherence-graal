@@ -11,17 +11,6 @@
       "type": "char[]"
     },
     {
-      "type": "com.oracle.coherence.graal.BasicNamedCacheIT",
-      "methods": [
-        {
-          "name": "$deserializeLambda$",
-          "parameterTypes": [
-            "java.lang.invoke.SerializedLambda"
-          ]
-        }
-      ]
-    },
-    {
       "type": "com.oracle.net.Sdp"
     },
     {

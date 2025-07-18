@@ -10,6 +10,7 @@ package com.oracle.bedrock.runtime.coherence.profiles;
 import com.oracle.bedrock.Option;
 import com.oracle.bedrock.OptionsByType;
 import com.oracle.bedrock.runtime.*;
+import com.oracle.bedrock.runtime.coherence.CoherenceChannelSerializer;
 import com.oracle.bedrock.runtime.coherence.LocalNativeImageLauncher;
 import com.oracle.bedrock.runtime.java.ClassPath;
 import com.oracle.bedrock.runtime.java.options.ClassName;
@@ -49,6 +50,7 @@ public class NativeImageProfile
     public void onLaunching(Platform platform, MetaClass metaClass, OptionsByType options)
         {
         options.add(Executable.named(f_nativeImage));
+        options.add(CoherenceChannelSerializer.INSTANCE);
         options.remove(ClassPath.class);
         }
 

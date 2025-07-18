@@ -15,7 +15,6 @@ import com.oracle.bedrock.deferred.PermanentlyUnavailableException;
 import com.oracle.bedrock.deferred.TemporarilyUnavailableException;
 import com.oracle.bedrock.runtime.concurrent.RemoteCallable;
 import com.oracle.bedrock.runtime.java.options.JavaHome;
-import com.oracle.bedrock.runtime.java.profiles.RemoteDebugging;
 import com.oracle.bedrock.testsupport.deferred.Eventually;
 import com.oracle.bedrock.runtime.Application;
 import com.oracle.bedrock.runtime.ApplicationConsole;
@@ -96,7 +95,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import java.security.PrivilegedAction;
 
-import static com.oracle.bedrock.deferred.DeferredHelper.invoking;
 import static com.oracle.bedrock.deferred.DeferredHelper.within;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
@@ -850,8 +848,7 @@ public abstract class AbstractTestInfrastructure
      */
     public static void ensureRunningService(String sServerName, String sServiceName)
         {
-        Eventually.assertThat(invoking(findApplication(sServerName)).
-            isServiceRunning(sServiceName), is(true));
+        Eventually.assertDeferred(() -> findApplication(sServerName).isServiceRunning(sServiceName), is(true));
         }
 
     protected static OptionsByType createCacheServerOptions(String sClass)

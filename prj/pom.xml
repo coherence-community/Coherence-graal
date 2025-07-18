@@ -60,13 +60,6 @@
     <!-- The groupId of the Coherence product -->
     <coherence.group.id>com.oracle.coherence.ce</coherence.group.id>
 
-    <!--
-    Enable or disable the use of virtual threads in tests.
-    No actual value is set here so the default will be used in tests.
-    Set theis property on the command line to change it for a specific Maven build.
-    -->
-    <coherence.virtualthreads.enabled/>
-
     <!-- project information -->
     <project.build.number>0</project.build.number>
     <project.official>false</project.official>

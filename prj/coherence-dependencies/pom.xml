@@ -83,6 +83,13 @@
     <testcontainers.ryuk.disabled>true</testcontainers.ryuk.disabled>
 
     <!--
+    Enable or disable the use of virtual threads in tests.
+    No actual value is set here so the default will be used in tests.
+    Set theis property on the command line to change it for a specific Maven build.
+    -->
+    <coherence.virtualthreads.enabled>false</coherence.virtualthreads.enabled>
+
+    <!--
     These are extra args added to the jdeps command used by Moditect when running the code coverage build.
     We would ideally have had an empty property here, but Moditect blows up with an empty extraArgs parameter,
     so we use -v to make jdeps verbose.
