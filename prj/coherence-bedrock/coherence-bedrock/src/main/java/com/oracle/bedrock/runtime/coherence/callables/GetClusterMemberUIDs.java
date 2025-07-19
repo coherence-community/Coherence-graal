@@ -12,9 +12,10 @@ import com.tangosol.net.CacheFactory;
 import com.tangosol.net.Member;
 import com.tangosol.util.UID;
 
+import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
+@SuppressWarnings("unchecked")
 public class GetClusterMemberUIDs
         implements RemoteCallable<Set<UID>>
     {
@@ -30,7 +31,7 @@ public class GetClusterMemberUIDs
             }
         else
             {
-            TreeSet<UID> memberUIDs = new TreeSet<UID>();
+            Set<UID> memberUIDs = new HashSet<>();
 
             Set<Member> memberSet = cluster.getMemberSet();
 

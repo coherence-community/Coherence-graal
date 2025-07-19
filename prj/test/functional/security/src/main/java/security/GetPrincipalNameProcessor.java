@@ -14,7 +14,6 @@ import com.tangosol.io.ExternalizableLite;
 import com.tangosol.net.Coherence;
 import com.tangosol.net.NamedMap;
 import com.tangosol.net.Session;
-import com.tangosol.net.partition.KeyPartitioningStrategy;
 import com.tangosol.net.partition.SimplePartitionKey;
 import com.tangosol.net.security.SecurityHelper;
 import com.tangosol.util.InvocableMap;
@@ -57,6 +56,7 @@ public class GetPrincipalNameProcessor
                 .collect(Collectors.toSet());
         Logger.info("In GetPrincipalNameProcessor process(), principals=" + set);
         entry.setValue("foo");
+
         return set;
         }
 

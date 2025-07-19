@@ -1,0 +1,146 @@
+/*
+ * Copyright (c) 2025 Oracle and/or its affiliates.
+ *
+ * Licensed under the Universal Permissive License v 1.0 as shown at
+ * https://oss.oracle.com/licenses/upl.
+ */
+
+package com.tangosol.coherence.graal;
+
+import com.tangosol.coherence.Component;
+
+import com.tangosol.coherence.config.xml.CacheConfigNamespaceHandler;
+import com.tangosol.coherence.config.xml.OperationalConfigNamespaceHandler;
+
+import com.tangosol.config.xml.DocumentElementPreprocessor;
+import com.tangosol.config.xml.DocumentPreprocessor;
+import com.tangosol.config.xml.ElementProcessor;
+import com.tangosol.config.xml.NamespaceHandler;
+
+import com.tangosol.io.ExternalizableLite;
+
+import com.tangosol.io.pof.PofSerializer;
+import com.tangosol.io.pof.PortableObject;
+import com.tangosol.io.pof.schema.annotation.PortableType;
+
+import com.tangosol.run.xml.PropertyAdapter;
+import com.tangosol.run.xml.XmlSerializable;
+
+import org.graalvm.nativeimage.hosted.RuntimeResourceAccess;
+
+import java.lang.annotation.Annotation;
+
+import java.util.Set;
+
+/**
+ * A GraalVM native image {@link org.graalvm.nativeimage.hosted.Feature}
+ * used when building Coherence native applications.
+ */
+@SuppressWarnings("unused")
+public class CoherenceNativeImageFeature
+        extends AbstractNativeImageFeature
+    {
+    /**
+     * Create a {@link CoherenceNativeImageFeature}
+     */
+    public CoherenceNativeImageFeature()
+        {
+        super(SUPERTYPES, ANNOTATIONS, RESOURCES);
+        }
+
+    @Override
+    protected void processClass(AfterRegistrationAccess access, Class<?> clazz)
+        {
+        if (XmlSerializable.class.isAssignableFrom(clazz))
+            {
+            // this is an XML bean so register its corresponding config resource
+            String xmlName = "/" + clazz.getName().replace('.', '/') + ".xml";
+            RuntimeResourceAccess.addResource(clazz.getModule(), xmlName);
+            }
+        }
+
+    // ----- data members ---------------------------------------------------
+
+    /**
+     * All subclasses of these types will be included.
+     */
+    public static final Set<Class<?>> SUPERTYPES = Set.of(ElementProcessor.class,
+            PortableObject.class,
+            PofSerializer.class,
+            ExternalizableLite.class,
+            DocumentPreprocessor.class,
+            DocumentElementPreprocessor.ElementPreprocessor.class,
+            NamespaceHandler.class,
+            CacheConfigNamespaceHandler.Extension.class,
+            OperationalConfigNamespaceHandler.Extension.class,
+            PropertyAdapter.class,
+            XmlSerializable.class,
+            Component.class);
+
+    /**
+     * All types with these annotations will be included.
+     */
+    public static final Set<Class<? extends Annotation>> ANNOTATIONS = Set.of(PortableType.class);
+
+    /**
+     * The resources to be registered in the native image.
+     */
+    public static final Set<String> RESOURCES = Set.of(
+            "/com/oracle/coherence/defaults/coherence-cache-config.xml",
+            "/com/oracle/coherence/defaults/grpc-proxy-cache-config.xml",
+            "/com/oracle/coherence/defaults/management-config.xml",
+            "/com/oracle/coherence/defaults/management-http-config.xml",
+            "/com/oracle/coherence/defaults/pof-config.xml",
+            "/com/oracle/coherence/defaults/tangosol-coherence-override-dev.xml",
+            "/com/oracle/coherence/defaults/tangosol-coherence-override-eval.xml",
+            "/com/oracle/coherence/defaults/tangosol-coherence-override-prod.xml",
+            "/META-INF/helidon/serial-config.properties",
+            "/META-INF/schema.xml",
+            "/META-INF/type-aliases.properties",
+            "/reports/report-all.xml",
+            "/reports/report-cache-effectiveness.xml",
+            "/reports/report-cache-size.xml",
+            "/reports/report-cache-storage.xml",
+            "/reports/report-executor.xml",
+            "/reports/report-group.xml",
+            "/reports/report-grpc-proxy-connections.xml",
+            "/reports/report-grpc-proxy-v0.xml",
+            "/reports/report-grpc-proxy-v1.xml",
+            "/reports/report-jcache-configuration.xml",
+            "/reports/report-jcache-statistics.xml",
+            "/reports/report-management.xml",
+            "/reports/report-memory-status.xml",
+            "/reports/report-network-health.xml",
+            "/reports/report-network-health-detail.xml",
+            "/reports/report-node.xml",
+            "/reports/report-persistence.xml",
+            "/reports/report-persistence-detail.xml",
+            "/reports/report-proxy.xml",
+            "/reports/report-proxy-connections.xml",
+            "/reports/report-proxy-http.xml",
+            "/reports/report-service.xml",
+            "/reports/report-service-partitions.xml",
+            "/reports/report-topic.xml",
+            "/reports/report-topic-subscriber-groups.xml",
+            "/reports/report-topic-subscribers.xml",
+            "/reports/report-view-effectiveness.xml",
+            "/com/oracle/coherence/xsd/schema.xsd",
+            "/com/oracle/coherence/xsd/schema-cpp.xsd",
+            "/com/oracle/coherence/xsd/schema-dotnet.xsd",
+            "/com/oracle/coherence/xsd/schema-java.xsd",
+            "/com/oracle/coherence/xsd/schema-pof.xsd",
+            "coherence-cache-config.xsd",
+            "coherence-cache-config-base.xsd",
+            "coherence-config-base.xsd",
+            "coherence-operational-config.xsd",
+            "coherence-operational-config-base.xsd",
+            "coherence-pof-config.xml",
+            "coherence-pof-config.xsd",
+            "coherence-report-config.xsd",
+            "coherence-report-group-config.xsd",
+            "coherence-rest-config.xsd",
+            "coherence-system-config.xml",
+            "management-swagger.json",
+            "metrics-http-config.xml",
+            "tangosol-coherence.xml");
+    }

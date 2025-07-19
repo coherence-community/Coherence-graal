@@ -1,0 +1,64 @@
+/*
+ * Copyright (c) 2025 Oracle and/or its affiliates.
+ *
+ * Licensed under the Universal Permissive License v 1.0 as shown at
+ * https://oss.oracle.com/licenses/upl.
+ */
+
+package com.oracle.bedrock.runtime.coherence.graal;
+
+import com.oracle.bedrock.runtime.concurrent.RemoteCallable;
+import com.oracle.bedrock.runtime.concurrent.RemoteChannelSerializer;
+import com.oracle.bedrock.runtime.concurrent.RemoteEvent;
+import com.oracle.bedrock.runtime.concurrent.RemoteRunnable;
+
+import com.tangosol.coherence.graal.AbstractNativeImageFeature;
+
+import java.lang.annotation.Annotation;
+
+import java.util.Set;
+
+/**
+ * A GraalVM native image feature used when building native images
+ * for Bedrock testing.
+ */
+public class BedrockNativeImageFeature
+        extends AbstractNativeImageFeature
+    {
+    /**
+     * Create a Bedrock native image feature.
+     */
+    public BedrockNativeImageFeature()
+        {
+        super(SUPERTYPES, SERIALIZABLE_TYPES, ANNOTATIONS, RESOURCES);
+        }
+
+    // ----- data members ---------------------------------------------------
+
+    /**
+     * All subclasses of these types will be included.
+     */
+    public static final Set<Class<?>> SUPERTYPES = Set.of(
+            RemoteRunnable.class,
+            RemoteCallable.class,
+            RemoteEvent.class,
+            RemoteChannelSerializer.class);
+
+    /**
+     * All subclasses of these types will be registered for serialization.
+     */
+    public static final Set<Class<?>> SERIALIZABLE_TYPES = Set.of(
+            RemoteRunnable.class,
+            RemoteCallable.class,
+            RemoteEvent.class);
+
+    /**
+     * All types with these annotations will be included.
+     */
+    public static final Set<Class<? extends Annotation>> ANNOTATIONS = Set.of();
+
+    /**
+     * The resources to be registered in the native image.
+     */
+    public static final Set<String> RESOURCES = Set.of("channel-serializer-pof-config.xml");
+    }

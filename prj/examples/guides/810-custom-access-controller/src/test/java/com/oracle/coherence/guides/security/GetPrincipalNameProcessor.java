@@ -56,6 +56,7 @@ public class GetPrincipalNameProcessor
                 .collect(Collectors.toSet());
         Logger.info("In GetPrincipalNameProcessor process(), principals=" + set);
         entry.setValue("foo");
+
         return set;
         }
 
