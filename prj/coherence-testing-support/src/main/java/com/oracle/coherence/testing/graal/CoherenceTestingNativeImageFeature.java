@@ -1,18 +1,34 @@
+/*
+ * Copyright (c) 2025 Oracle and/or its affiliates.
+ *
+ * Licensed under the Universal Permissive License v 1.0 as shown at
+ * https://oss.oracle.com/licenses/upl.
+ */
+
 package com.oracle.coherence.testing.graal;
 
-import org.graalvm.nativeimage.hosted.Feature;
-import org.graalvm.nativeimage.hosted.RuntimeResourceAccess;
+import com.tangosol.coherence.graal.AbstractNativeImageFeature;
 
+import java.util.Set;
+
+/**
+ * A GraalVM native image feature used when building native images
+ * for Coherence testing.
+ */
 public class CoherenceTestingNativeImageFeature
-        implements Feature
+        extends AbstractNativeImageFeature
     {
-    @Override
-    public void beforeAnalysis(BeforeAnalysisAccess access)
+    public CoherenceTestingNativeImageFeature()
         {
-        Module module = getClass().getModule();
-        RuntimeResourceAccess.addResource(module, "tangosol-coherence-override.xml");
-        RuntimeResourceAccess.addResource(module, "logging.properties");
-        RuntimeResourceAccess.addResource(module, "/common/tangosol-coherence-override.xml");
-        RuntimeResourceAccess.addResource(module, "/META-INF/helidon/serial-config.properties");
+        super(Set.of(), Set.of(), RESOURCES);
         }
+
+    /**
+     * The resources to be registered in the native image.
+     */
+    public static final Set<String> RESOURCES = Set.of(
+            "tangosol-coherence-override.xml",
+            "logging.properties",
+            "/common/tangosol-coherence-override.xml",
+            "/META-INF/helidon/serial-config.properties");
     }
