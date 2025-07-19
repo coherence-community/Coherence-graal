@@ -1,8 +1,8 @@
 package com.oracle.bedrock.runtime.coherence;
 
 import com.oracle.bedrock.runtime.concurrent.RemoteChannelSerializer;
-import com.tangosol.io.DefaultSerializer;
 import com.tangosol.io.Serializer;
+import com.tangosol.io.pof.SafeConfigurablePofContext;
 import com.tangosol.util.Binary;
 import com.tangosol.util.ExternalizableHelper;
 
@@ -11,7 +11,7 @@ public class CoherenceChannelSerializer
     {
     public CoherenceChannelSerializer()
         {
-        m_serializer = new DefaultSerializer();
+        m_serializer = new SafeConfigurablePofContext("coherence-pof-config.xml");
         }
 
     @Override

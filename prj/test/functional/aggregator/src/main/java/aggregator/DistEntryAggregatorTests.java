@@ -145,7 +145,7 @@ public class DistEntryAggregatorTests
         Properties props = new Properties();
         props.setProperty("test.thread.count", "0");
 
-        int clusterSize = 1;
+        int clusterSize = 4;
 
         // initial cluster
         for (int i = 0; i < clusterSize; i++)
