@@ -19,7 +19,6 @@ import com.tangosol.run.xml.XmlElement;
 import com.tangosol.util.ImmutableArrayList;
 
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -30,7 +29,7 @@ public class GetAutoStartServiceNames
     public Set<String> call() throws Exception
         {
         ConfigurableCacheFactory configurableCacheFactory = CacheFactory.getConfigurableCacheFactory();
-        Set<String> serviceNames = new ImmutableArrayList();
+        Set<String> serviceNames = new HashSet<>();
 
         if (configurableCacheFactory instanceof DefaultConfigurableCacheFactory)
             {
@@ -53,7 +52,7 @@ public class GetAutoStartServiceNames
                     }
                 }
 
-            return serviceNames;
+            return new ImmutableArrayList(serviceNames);
             }
         else if (configurableCacheFactory instanceof ExtensibleConfigurableCacheFactory)
             {
@@ -88,7 +87,7 @@ public class GetAutoStartServiceNames
                         }
                     }
 
-                return serviceNames;
+                return new ImmutableArrayList(serviceNames);
                 }
             }
         else

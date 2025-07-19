@@ -9,7 +9,6 @@ package com.oracle.bedrock.runtime.coherence.callables;
 
 import com.oracle.bedrock.runtime.concurrent.RemoteCallable;
 import com.tangosol.net.CacheFactory;
-import com.tangosol.util.ImmutableArrayList;
 
 import java.util.Enumeration;
 import java.util.HashSet;
@@ -28,7 +27,7 @@ public class GetServiceNames
         {
         // attempt to get the cluster
         com.tangosol.net.Cluster cluster = CacheFactory.getCluster();
-        Set<String>              set     = new ImmutableArrayList();
+        Set<String>              set     = new HashSet<>();
 
         // when there's no cluster there's no result
         if (cluster == null || !cluster.isRunning())

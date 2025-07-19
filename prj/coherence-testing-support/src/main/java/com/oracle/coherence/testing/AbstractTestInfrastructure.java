@@ -50,6 +50,8 @@ import com.tangosol.coherence.config.Config;
 
 import com.tangosol.internal.util.invoke.Lambdas;
 
+import com.tangosol.io.ExternalizableLite;
+import com.tangosol.io.pof.PortableObject;
 import com.tangosol.net.CacheFactory;
 import com.tangosol.net.CacheFactoryBuilder;
 import com.tangosol.net.CacheService;
@@ -751,6 +753,7 @@ public abstract class AbstractTestInfrastructure
                 }
             catch (Throwable err)
                 {
+                err.printStackTrace();
                 // take a thread dump of the member that timed out
                 System.out.println("Thread dump on server: " + member.getRoleName());
                 System.out.println(member.invoke(new RemoteThreadDump()));
@@ -1719,7 +1722,7 @@ public abstract class AbstractTestInfrastructure
      * Return a thread dump of the invoking member.
      */
     protected static class RemoteThreadDump
-            implements RemoteCallable<String>
+            implements RemoteCallable<String>, ExternalizableLite
         {
 
         // ----- RemoteCallable methods -------------------------------------

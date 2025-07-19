@@ -11,7 +11,7 @@ public class CoherenceChannelSerializer
     {
     public CoherenceChannelSerializer()
         {
-        m_serializer = new SafeConfigurablePofContext("coherence-pof-config.xml");
+        m_serializer = new SafeConfigurablePofContext("channel-serializer-pof-config.xml");
         }
 
     @Override

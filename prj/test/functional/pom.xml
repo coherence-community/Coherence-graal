@@ -269,6 +269,10 @@
             </executions>
             <configuration>
               <mainClass>com.oracle.bedrock.runtime.java.JavaApplicationRunner</mainClass>
+              <quickBuild>true</quickBuild>
+              <buildArgs>
+                <buildArg>-march=native</buildArg>
+              </buildArgs>
             </configuration>
           </plugin>
         </plugins>

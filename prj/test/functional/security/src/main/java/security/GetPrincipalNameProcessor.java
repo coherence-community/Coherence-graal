@@ -14,10 +14,8 @@ import com.tangosol.io.ExternalizableLite;
 import com.tangosol.net.Coherence;
 import com.tangosol.net.NamedMap;
 import com.tangosol.net.Session;
-import com.tangosol.net.partition.KeyPartitioningStrategy;
 import com.tangosol.net.partition.SimplePartitionKey;
 import com.tangosol.net.security.SecurityHelper;
-import com.tangosol.util.ImmutableArrayList;
 import com.tangosol.util.InvocableMap;
 import com.tangosol.util.processor.AbstractProcessor;
 
@@ -59,9 +57,7 @@ public class GetPrincipalNameProcessor
         Logger.info("In GetPrincipalNameProcessor process(), principals=" + set);
         entry.setValue("foo");
 
-        Set<String> result = new ImmutableArrayList();
-        result.addAll(set);
-        return result;
+        return set;
         }
 
     @Override

@@ -10,6 +10,7 @@ import io.github.classgraph.ScanResult;
 
 import org.graalvm.nativeimage.hosted.Feature;
 import org.graalvm.nativeimage.hosted.RuntimeReflection;
+import org.graalvm.nativeimage.hosted.RuntimeResourceAccess;
 import org.graalvm.nativeimage.hosted.RuntimeSerialization;
 
 import java.io.IOException;
@@ -38,8 +39,7 @@ public class BedrockNativeImageFeature
     @Override
     public void beforeAnalysis(BeforeAnalysisAccess access)
         {
-        RuntimeSerialization.register(Throwable.class, Exception.class,
-                IOException.class, ObjectStreamException.class, InvalidClassException.class);
+        RuntimeResourceAccess.addResource(getClass().getModule(), "channel-serializer-pof-config.xml");
 
         ClassLoader imageClassLoader = access.getApplicationClassLoader();
         try (ScanResult scanResult = new ClassGraph()
