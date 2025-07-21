@@ -1,0 +1,15 @@
+{
+  "reflection": [
+    {
+      "type": "com.oracle.coherence.io.json.GensonBundleProvider"
+    }
+  ],
+  "resources": [
+    {
+      "glob": "json-pof-config.xml"
+    },
+    {
+      "glob": "META-INF/type-aliases.properties"
+    }
+  ]
+}

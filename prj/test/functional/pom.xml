@@ -51,12 +51,6 @@
       </plugin>
 
       <plugin>
-        <groupId>org.graalvm.buildtools</groupId>
-        <artifactId>native-maven-plugin</artifactId>
-        <version>${native.maven.plugin.version}</version>
-      </plugin>
-
-      <plugin>
         <groupId>com.oracle.coherence.moditect</groupId>
         <artifactId>moditect-maven-plugin</artifactId>
         <version>${maven.moditect.plugin.version}</version>
@@ -272,6 +266,8 @@
               <quickBuild>true</quickBuild>
               <buildArgs>
                 <buildArg>-march=native</buildArg>
+                <buildArg>--emit</buildArg>
+                <buildArg>build-report</buildArg>
               </buildArgs>
             </configuration>
           </plugin>

@@ -29,7 +29,5 @@ public class CoherenceTestDataNativeImageFeature
     public static final Set<String> RESOURCES = Set.of(
             "/data/readme.txt",
             "/data/test-1.txt",
-            "/data/pof/test-pof-config.xml",
-            "/META-INF/helidon/serial-config.properties",
-            "/META-INF/type-aliases.properties");
+            "/data/pof/test-pof-config.xml");
     }

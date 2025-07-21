@@ -1467,6 +1467,21 @@
                 <outputDirectory>${project.build.outputDirectory}/META-INF</outputDirectory>
               </configuration>
             </execution>
+<!--            <execution>-->
+<!--              <id>native-resources</id>-->
+<!--              <phase>process-resources</phase>-->
+<!--              <goals>-->
+<!--                <goal>copy-resources</goal>-->
+<!--              </goals>-->
+<!--              <configuration>-->
+<!--                <resources>-->
+<!--                  <resource>-->
+<!--                    <directory>${project.build.sourceDirectory}/../resources/META-INF/native-image/com.oracle.coherence/${project.artifactId}</directory>-->
+<!--                  </resource>-->
+<!--                </resources>-->
+<!--                <outputDirectory>${project.build.outputDirectory}/META-INF/native-image/${project.groupId}/${project.artifactId}</outputDirectory>-->
+<!--              </configuration>-->
+<!--            </execution>-->
           </executions>
         </plugin>
 

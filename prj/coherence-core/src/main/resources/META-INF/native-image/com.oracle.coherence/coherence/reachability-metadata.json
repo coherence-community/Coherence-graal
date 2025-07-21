@@ -1204,154 +1204,19 @@
   ],
   "resources": [
     {
-      "glob": "+>180,03q;>+"
-    },
-    {
-      "glob": "+>180,03q<:-"
-    },
-    {
-      "glob": "/cache-factory-builder-config.xml"
-    },
-    {
-      "glob": "/cache-factory-config.xml"
-    },
-    {
-      "glob": "/com/oracle/coherence/defaults/cache-factory-builder-config.xml"
-    },
-    {
-      "glob": "/com/oracle/coherence/defaults/cache-factory-config.xml"
-    },
-    {
-      "glob": "/com/oracle/coherence/defaults/custom-mbeans.xml"
-    },
-    {
-      "glob": "/com/oracle/coherence/defaults/management-config.xml"
-    },
-    {
-      "glob": "/com/oracle/coherence/defaults/pof-config.xml"
-    },
-    {
-      "glob": "/com/oracle/coherence/defaults/tangosol-coherence-override-dev.xml"
-    },
-    {
-      "glob": "/com/oracle/coherence/defaults/tangosol-coherence-override.xml"
-    },
-    {
-      "glob": "/custom-mbeans.xml"
-    },
-    {
-      "glob": "/management-config.xml"
-    },
-    {
-      "glob": "/pof-config.xml"
-    },
-    {
       "glob": "/tangosol-coherence-override-dev.xml"
+    },
+    {
+      "glob": "/tangosol-coherence-override-eval.xml"
+    },
+    {
+      "glob": "/tangosol-coherence-override-prod.xml"
     },
     {
       "glob": "/tangosol-coherence-override.xml"
     },
     {
-      "glob": "/tangosol-coherence.xml"
-    },
-    {
-      "glob": "<02p+>180,03p36<:1,:pS6<:1,:;P=5:<+\\{S6<:1,:\\[>+>q<3>,,"
-    },
-    {
-      "glob": "<02p+>180,03p36<:1,:pS6<:1,:;P=5:<+q<3>,,"
-    },
-    {
-      "glob": "<02p+>180,03p36<:1,:p\\07:-:1<:M:>3K62:\\36:1+q<3>,,"
-    },
-    {
-      "glob": "<02p+>180,03p36<:1,:p\\07:-:1<:\\02/*+:\\36:1+q<3>,,"
-    },
-    {
-      "glob": "<02p+>180,03p36<:1,:p\\07:-:1<:\\><7618Z;6+601q<3>,,"
-    },
-    {
-      "glob": "<02p+>180,03p36<:1,:p\\07:-:1<:\\[>+>X-6;Z;6+601q<3>,,"
-    },
-    {
-      "glob": "<02p+>180,03p36<:1,:p\\07:-:1<:\\[>+>\\36:1+q<3>,,"
-    },
-    {
-      "glob": "<02p+>180,03p36<:1,:p\\07:-:1<:^/36<>+601Z;6+601q<3>,,"
-    },
-    {
       "glob": "META-INF/pof.idx"
-    },
-    {
-      "glob": "META-INF/services/com.sun.net.httpserver.spi.HttpServerProvider"
-    },
-    {
-      "glob": "META-INF/services/com.tangosol.application.LifecycleListener"
-    },
-    {
-      "glob": "META-INF/services/com.tangosol.coherence.config.EnvironmentVariableResolver"
-    },
-    {
-      "glob": "META-INF/services/com.tangosol.coherence.config.SystemPropertyResolver"
-    },
-    {
-      "glob": "META-INF/services/com.tangosol.coherence.config.xml.CacheConfigNamespaceHandler$Extension"
-    },
-    {
-      "glob": "META-INF/services/com.tangosol.coherence.config.xml.OperationalConfigNamespaceHandler$Extension"
-    },
-    {
-      "glob": "META-INF/services/com.tangosol.internal.tracing.TracingShimLoader"
-    },
-    {
-      "glob": "META-INF/services/com.tangosol.io.Serializer"
-    },
-    {
-      "glob": "META-INF/services/com.tangosol.io.SerializerFactory"
-    },
-    {
-      "glob": "META-INF/services/com.tangosol.io.pof.PofConfigProvider"
-    },
-    {
-      "glob": "META-INF/services/com.tangosol.net.Coherence$LifecycleListener"
-    },
-    {
-      "glob": "META-INF/services/com.tangosol.net.MemberIdentityProvider"
-    },
-    {
-      "glob": "META-INF/services/com.tangosol.net.SessionConfiguration"
-    },
-    {
-      "glob": "META-INF/services/com.tangosol.net.SessionProvider"
-    },
-    {
-      "glob": "META-INF/services/com.tangosol.net.events.InterceptorMetadataResolver"
-    },
-    {
-      "glob": "META-INF/services/com.tangosol.net.management.MapJsonBodyHandler"
-    },
-    {
-      "glob": "META-INF/services/com.tangosol.net.metrics.MetricsRegistryAdapter"
-    },
-    {
-      "glob": "META-INF/services/com.tangosol.util.HealthCheck"
-    },
-    {
-      "glob": "META-INF/services/java.net.spi.InetAddressResolverProvider"
-    },
-    {
-      "glob": "META-INF/services/java.nio.channels.spi.SelectorProvider"
-    },
-    {
-      "glob": "META-INF/services/java.util.spi.ResourceBundleControlProvider"
-    },
-    {
-      "glob": "META-INF/services/javax.management.remote.JMXConnectorServerProvider"
-    },
-    {
-      "glob": "META-INF/services/javax.xml.validation.SchemaFactory"
-    },
-    {
-      "glob": "META-INF/tangosol-application.properties"
     },
     {
       "glob": "cache-factory-builder-config.xml"
@@ -1360,67 +1225,13 @@
       "glob": "cache-factory-config.xml"
     },
     {
-      "glob": "coherence-cache-config-base.xsd"
-    },
-    {
       "glob": "coherence-cache-config.xml"
-    },
-    {
-      "glob": "coherence-cache-config.xsd"
-    },
-    {
-      "glob": "coherence-community.xml"
-    },
-    {
-      "glob": "coherence-config-base.xsd"
-    },
-    {
-      "glob": "coherence-operational-config-base.xsd"
-    },
-    {
-      "glob": "coherence-operational-config.xsd"
-    },
-    {
-      "glob": "coherence-pof-config.xml"
-    },
-    {
-      "glob": "coherence-pof-config.xsd"
-    },
-    {
-      "glob": "coherence-report-group-config.xsd"
-    },
-    {
-      "glob": "coherence-system-config.xml"
-    },
-    {
-      "glob": "com/oracle/coherence/defaults/cache-factory-builder-config.xml"
-    },
-    {
-      "glob": "com/oracle/coherence/defaults/cache-factory-config.xml"
-    },
-    {
-      "glob": "com/oracle/coherence/defaults/custom-mbeans.xml"
-    },
-    {
-      "glob": "com/oracle/coherence/defaults/management-config.xml"
-    },
-    {
-      "glob": "com/oracle/coherence/defaults/pof-config.xml"
-    },
-    {
-      "glob": "com/oracle/coherence/defaults/tangosol-coherence-override-dev.xml"
-    },
-    {
-      "glob": "com/oracle/coherence/defaults/tangosol-coherence-override.xml"
     },
     {
       "glob": "com/tangosol/run/xml/PackageResources_en.properties"
     },
     {
       "glob": "com/tangosol/run/xml/PackageResources_en_US.properties"
-    },
-    {
-      "glob": "com/tangosol/util/ExternalizableHelper.xml"
     },
     {
       "glob": "custom-mbeans.xml"
@@ -1433,24 +1244,6 @@
     },
     {
       "glob": "processor-dictionary.xml"
-    },
-    {
-      "glob": "reports/report-group.xml"
-    },
-    {
-      "glob": "tangosol-application.properties"
-    },
-    {
-      "glob": "tangosol-coherence-override-dev.xml"
-    },
-    {
-      "glob": "tangosol-coherence-override.xml"
-    },
-    {
-      "glob": "tangosol-coherence.xml"
-    },
-    {
-      "glob": "tangosol.cer"
     },
     {
       "module": "java.base",

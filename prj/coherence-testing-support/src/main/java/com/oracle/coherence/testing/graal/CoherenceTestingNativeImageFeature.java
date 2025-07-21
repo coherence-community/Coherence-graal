@@ -28,7 +28,5 @@ public class CoherenceTestingNativeImageFeature
      */
     public static final Set<String> RESOURCES = Set.of(
             "tangosol-coherence-override.xml",
-            "logging.properties",
-            "/common/tangosol-coherence-override.xml",
-            "/META-INF/helidon/serial-config.properties");
+            "logging.properties");
     }

@@ -12,6 +12,7 @@ import com.oracle.bedrock.runtime.concurrent.RemoteChannelSerializer;
 import com.oracle.bedrock.runtime.concurrent.RemoteEvent;
 import com.oracle.bedrock.runtime.concurrent.RemoteRunnable;
 
+import com.oracle.bedrock.runtime.concurrent.callable.RemoteMethodInvocation;
 import com.tangosol.coherence.graal.AbstractNativeImageFeature;
 
 import java.lang.annotation.Annotation;
@@ -42,7 +43,8 @@ public class BedrockNativeImageFeature
             RemoteRunnable.class,
             RemoteCallable.class,
             RemoteEvent.class,
-            RemoteChannelSerializer.class);
+            RemoteChannelSerializer.class,
+            RemoteMethodInvocation.Interceptor.class);
 
     /**
      * All subclasses of these types will be registered for serialization.
@@ -50,7 +52,8 @@ public class BedrockNativeImageFeature
     public static final Set<Class<?>> SERIALIZABLE_TYPES = Set.of(
             RemoteRunnable.class,
             RemoteCallable.class,
-            RemoteEvent.class);
+            RemoteEvent.class,
+            RemoteMethodInvocation.Interceptor.class);
 
     /**
      * All types with these annotations will be included.

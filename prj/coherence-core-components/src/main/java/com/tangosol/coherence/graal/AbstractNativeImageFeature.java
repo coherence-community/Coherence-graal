@@ -42,7 +42,8 @@ import java.util.stream.Collectors;
  * A base class for GraalVM native {@link Feature} implementations.
  */
 @SuppressWarnings("unused")
-public abstract class AbstractNativeImageFeature implements Feature
+public abstract class AbstractNativeImageFeature
+        implements Feature
     {
     /**
      * Create a native image feature.
