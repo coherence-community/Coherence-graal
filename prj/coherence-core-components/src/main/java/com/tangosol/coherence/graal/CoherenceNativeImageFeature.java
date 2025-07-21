@@ -75,6 +75,7 @@ public class CoherenceNativeImageFeature
             OperationalConfigNamespaceHandler.Extension.class,
             PropertyAdapter.class,
             XmlSerializable.class,
+            Throwable.class,
             Component.class);
 
     /**
