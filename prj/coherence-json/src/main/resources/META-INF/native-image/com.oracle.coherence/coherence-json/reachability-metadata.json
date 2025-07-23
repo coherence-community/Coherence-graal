@@ -2,6 +2,9 @@
   "reflection": [
     {
       "type": "com.oracle.coherence.io.json.GensonBundleProvider"
+    },
+    {
+      "type": "com.oracle.coherence.io.json.CoherenceBundleProvider"
     }
   ],
   "resources": [

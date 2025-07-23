@@ -268,6 +268,7 @@
                 <buildArg>-march=native</buildArg>
                 <buildArg>--emit</buildArg>
                 <buildArg>build-report</buildArg>
+                <buildArg>--initialize-at-build-time=org.junit.platform.commons.support.scanning.DefaultClasspathScanner</buildArg>
               </buildArgs>
             </configuration>
           </plugin>

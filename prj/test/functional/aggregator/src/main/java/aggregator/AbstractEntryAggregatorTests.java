@@ -10,6 +10,7 @@ package aggregator;
 
 import com.oracle.bedrock.testsupport.deferred.Eventually;
 
+import com.tangosol.io.ExternalizableLite;
 import com.tangosol.net.CacheFactory;
 import com.tangosol.net.Cluster;
 import com.tangosol.net.NamedCache;
@@ -920,8 +921,8 @@ public abstract class AbstractEntryAggregatorTests
     /**
     * Comparator used for testing ComparableMax and ComparableMin
     */
-    private static class FirstNameComparator
-            implements Comparator, Serializable
+    public static class FirstNameComparator
+            implements Comparator, ExternalizableLite
         {
         public int compare(Object o1, Object o2)
             {
@@ -1356,7 +1357,7 @@ public abstract class AbstractEntryAggregatorTests
         }
 
     public static class NotEmptyAggregator
-            implements InvocableMap.ParallelAwareAggregator
+            implements InvocableMap.ParallelAwareAggregator, ExternalizableLite
         {
         public Object aggregateResults(Collection collResults)
             {
