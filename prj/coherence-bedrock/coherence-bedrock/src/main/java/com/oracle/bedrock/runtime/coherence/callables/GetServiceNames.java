@@ -22,6 +22,7 @@ public class GetServiceNames
         implements RemoteCallable<Set<String>>
     {
     @Override
+    @SuppressWarnings("unchecked")
     public Set<String> call() throws Exception
         {
         // attempt to get the cluster

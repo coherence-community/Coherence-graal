@@ -15,7 +15,6 @@ import com.oracle.bedrock.deferred.PermanentlyUnavailableException;
 import com.oracle.bedrock.deferred.TemporarilyUnavailableException;
 import com.oracle.bedrock.runtime.concurrent.RemoteCallable;
 import com.oracle.bedrock.runtime.java.options.JavaHome;
-import com.oracle.bedrock.runtime.java.profiles.RemoteDebugging;
 import com.oracle.bedrock.testsupport.deferred.Eventually;
 import com.oracle.bedrock.runtime.Application;
 import com.oracle.bedrock.runtime.ApplicationConsole;
@@ -51,6 +50,8 @@ import com.tangosol.coherence.config.Config;
 
 import com.tangosol.internal.util.invoke.Lambdas;
 
+import com.tangosol.io.ExternalizableLite;
+import com.tangosol.io.pof.PortableObject;
 import com.tangosol.net.CacheFactory;
 import com.tangosol.net.CacheFactoryBuilder;
 import com.tangosol.net.CacheService;
@@ -96,7 +97,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import java.security.PrivilegedAction;
 
-import static com.oracle.bedrock.deferred.DeferredHelper.invoking;
 import static com.oracle.bedrock.deferred.DeferredHelper.within;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
@@ -753,6 +753,7 @@ public abstract class AbstractTestInfrastructure
                 }
             catch (Throwable err)
                 {
+                err.printStackTrace();
                 // take a thread dump of the member that timed out
                 System.out.println("Thread dump on server: " + member.getRoleName());
                 System.out.println(member.invoke(new RemoteThreadDump()));
@@ -850,8 +851,7 @@ public abstract class AbstractTestInfrastructure
      */
     public static void ensureRunningService(String sServerName, String sServiceName)
         {
-        Eventually.assertThat(invoking(findApplication(sServerName)).
-            isServiceRunning(sServiceName), is(true));
+        Eventually.assertDeferred(() -> findApplication(sServerName).isServiceRunning(sServiceName), is(true));
         }
 
     protected static OptionsByType createCacheServerOptions(String sClass)
@@ -888,10 +888,7 @@ public abstract class AbstractTestInfrastructure
             optionsByType.add(ClassPath.of(sClassPath));
             }
 
-        String[] defaultJvmOpts = new String[] { "-server",
-                "-XX:+HeapDumpOnOutOfMemoryError",
-                "-XX:HeapDumpPath=" + System.getProperty("test.project.dir") + File.separatorChar + "target",
-                "-XX:+ExitOnOutOfMemoryError" };
+        String[] defaultJvmOpts = new String[0];
 
         Freeforms jvmOptions = System.getProperty("test.jvm.options") != null
                 ? new Freeforms(new Freeform(defaultJvmOpts),
@@ -1725,7 +1722,7 @@ public abstract class AbstractTestInfrastructure
      * Return a thread dump of the invoking member.
      */
     protected static class RemoteThreadDump
-            implements RemoteCallable<String>
+            implements RemoteCallable<String>, ExternalizableLite
         {
 
         // ----- RemoteCallable methods -------------------------------------
