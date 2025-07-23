@@ -26,8 +26,5 @@ public class CoherenceTestDataNativeImageFeature
     /**
      * The resources to be registered in the native image.
      */
-    public static final Set<String> RESOURCES = Set.of(
-            "/data/readme.txt",
-            "/data/test-1.txt",
-            "/data/pof/test-pof-config.xml");
+    public static final Set<String> RESOURCES = Set.of();
     }

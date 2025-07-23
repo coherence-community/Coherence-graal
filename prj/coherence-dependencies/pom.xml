@@ -963,6 +963,19 @@
           <groupId>org.graalvm.buildtools</groupId>
           <artifactId>native-maven-plugin</artifactId>
           <version>${native.maven.plugin.version}</version>
+          <executions>
+            <execution>
+              <id>generate-resource-config</id>
+              <goals>
+                <goal>generateResourceConfig</goal>
+              </goals>
+              <phase>prepare-package</phase>
+              <configuration>
+                <isDetectionEnabled>true</isDetectionEnabled>
+                <outputDirectory>${project.build.outputDirectory}/META-INF/native-image/com.oracle.coherence/${project.artifactId}</outputDirectory>
+              </configuration>
+            </execution>
+          </executions>
         </plugin>
 
         <plugin>

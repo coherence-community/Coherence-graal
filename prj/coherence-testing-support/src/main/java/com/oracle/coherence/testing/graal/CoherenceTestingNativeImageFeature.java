@@ -26,7 +26,5 @@ public class CoherenceTestingNativeImageFeature
     /**
      * The resources to be registered in the native image.
      */
-    public static final Set<String> RESOURCES = Set.of(
-            "tangosol-coherence-override.xml",
-            "logging.properties");
+    public static final Set<String> RESOURCES = Set.of();
     }
