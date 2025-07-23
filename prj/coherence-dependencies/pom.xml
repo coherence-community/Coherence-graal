@@ -138,7 +138,7 @@
     <maven.protobuf.plugin.version>0.6.1</maven.protobuf.plugin.version>
     <maven.groovy.plugin.version>2.1.1</maven.groovy.plugin.version>
 
-    <native.maven.plugin.version>0.10.6</native.maven.plugin.version>
+    <native.maven.plugin.version>0.11.0</native.maven.plugin.version>
 
     <!-- library dependency versions -->
     <asciidoctor.diagram.version>2.3.2</asciidoctor.diagram.version>
