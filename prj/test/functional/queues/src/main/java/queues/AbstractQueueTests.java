@@ -13,6 +13,10 @@ import com.tangosol.coherence.config.scheme.SimpleDequeScheme;
 import com.tangosol.internal.net.queue.QueuePageIterator;
 import com.tangosol.internal.net.queue.extractor.QueueKeyExtractor;
 import com.tangosol.internal.net.queue.model.QueueKey;
+import com.tangosol.io.ExternalizableLite;
+import com.tangosol.io.pof.PofReader;
+import com.tangosol.io.pof.PofWriter;
+import com.tangosol.io.pof.PortableObject;
 import com.tangosol.net.CacheService;
 import com.tangosol.net.ConfigurableCacheFactory;
 import com.tangosol.net.NamedMap;
@@ -26,6 +30,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -371,8 +378,8 @@ public abstract class AbstractQueueTests<QueueType extends NamedQueue>
         int                        cBytes = 100;
         long                       cEntry = cMax / cBytes;
 
-        assertThat(cache.invoke(key, entry -> AbstractQueueTests.setMaxQueueSize(entry, cMax)), is(true));
-        assertThat(cache.invoke(key, AbstractQueueTests::getMaxQueueSize), is(cMax));
+        assertThat(cache.invoke(key, new SetMaxQueueSize<>(cMax)), is(true));
+        assertThat(cache.invoke(key, new GetMaxQueueSize()), is(cMax));
 
         String sPad     = Randoms.getRandomString(cBytes, cBytes, true);
         for (int i = 0; i < (cEntry * 2); i++)
@@ -385,7 +392,7 @@ public abstract class AbstractQueueTests<QueueType extends NamedQueue>
             }
 
         // should be <= max queue size
-        Long cUnits = cache.invoke(key, AbstractQueueTests::getCacheUnits);
+        Long cUnits = cache.invoke(key, new GetCacheUnits<>());
         assertThat(cUnits, is(notNullValue()));
         assertThat(cUnits, is(lessThanOrEqualTo(cMax)));
 
@@ -398,33 +405,103 @@ public abstract class AbstractQueueTests<QueueType extends NamedQueue>
         assertThat(queue.offer(sPad + "-X"), is(true));
         }
 
-    public static Boolean setMaxQueueSize(InvocableMap.Entry<?, ?> entry, long cMaxSize)
+    public static class SetMaxQueueSize<K, V>
+            implements InvocableMap.EntryProcessor<K, V, Boolean>, ExternalizableLite, PortableObject
         {
-        MapIndex index = entry.asBinaryEntry().getIndexMap().get(QueueKeyExtractor.INSTANCE);
-        assertThat(index, is(instanceOf(QueueKeyExtractor.QueueIndex.class)));
-        QueueKeyExtractor.QueueIndex queueIndex = (QueueKeyExtractor.QueueIndex) index;
-        queueIndex.setMaxQueueSize(cMaxSize);
-        return true;
-        }
-
-    public static long getMaxQueueSize(InvocableMap.Entry<?, ?> entry)
-        {
-        MapIndex index = entry.asBinaryEntry().getIndexMap().get(QueueKeyExtractor.INSTANCE);
-        assertThat(index, is(instanceOf(QueueKeyExtractor.QueueIndex.class)));
-        QueueKeyExtractor.QueueIndex queueIndex = (QueueKeyExtractor.QueueIndex) index;
-        return queueIndex.getMaxQueueSize();
-        }
-
-    @SuppressWarnings({"deprecation", "PatternVariableCanBeUsed"})
-    public static Long getCacheUnits(InvocableMap.Entry<?, ?> entry)
-        {
-        ObservableMap<?, ?> backingMap = entry.asBinaryEntry().getBackingMapContext().getBackingMap();
-        if (backingMap instanceof ConfigurableCacheMap)
+        public SetMaxQueueSize()
             {
-            ConfigurableCacheMap map = (ConfigurableCacheMap) backingMap;
-            return (long) map.getUnits() * (long) map.getUnitFactor();
             }
-        return -1L;
+
+        public SetMaxQueueSize(long cMaxSize)
+            {
+            m_cMaxSize = cMaxSize;
+            }
+
+        @Override
+        public Boolean process(InvocableMap.Entry<K, V> entry)
+            {
+            MapIndex index = entry.asBinaryEntry().getIndexMap().get(QueueKeyExtractor.INSTANCE);
+            assertThat(index, is(instanceOf(QueueKeyExtractor.QueueIndex.class)));
+            QueueKeyExtractor.QueueIndex queueIndex = (QueueKeyExtractor.QueueIndex) index;
+            queueIndex.setMaxQueueSize(m_cMaxSize);
+            return true;
+            }
+
+        @Override
+        public void readExternal(PofReader in) throws IOException
+            {
+            m_cMaxSize = in.readLong(0);
+            }
+
+        @Override
+        public void writeExternal(PofWriter out) throws IOException
+            {
+            out.writeLong(0, m_cMaxSize);
+            }
+
+        @Override
+        public void readExternal(DataInput in) throws IOException
+            {
+            m_cMaxSize = in.readLong();
+            }
+
+        @Override
+        public void writeExternal(DataOutput out) throws IOException
+            {
+            out.writeLong(m_cMaxSize);
+            }
+
+        private long m_cMaxSize;
+        }
+
+    public static class GetMaxQueueSize<K, V>
+            implements InvocableMap.EntryProcessor<K, V, Long>, ExternalizableLite, PortableObject
+        {
+        @Override
+        public Long process(InvocableMap.Entry<K, V> entry)
+            {
+            MapIndex index = entry.asBinaryEntry().getIndexMap().get(QueueKeyExtractor.INSTANCE);
+            assertThat(index, is(instanceOf(QueueKeyExtractor.QueueIndex.class)));
+            QueueKeyExtractor.QueueIndex queueIndex = (QueueKeyExtractor.QueueIndex) index;
+            return queueIndex.getMaxQueueSize();
+            }
+
+        @Override
+        public void readExternal(PofReader in) throws IOException
+            {
+            }
+
+        @Override
+        public void writeExternal(PofWriter out) throws IOException
+            {
+            }
+        }
+
+    public static class GetCacheUnits<K, V>
+            implements InvocableMap.EntryProcessor<K, V, Long>, ExternalizableLite, PortableObject
+        {
+        @Override
+        @SuppressWarnings({"deprecation", "PatternVariableCanBeUsed"})
+        public Long process(InvocableMap.Entry<K, V> entry)
+            {
+            ObservableMap<?, ?> backingMap = entry.asBinaryEntry().getBackingMapContext().getBackingMap();
+            if (backingMap instanceof ConfigurableCacheMap)
+                {
+                ConfigurableCacheMap map = (ConfigurableCacheMap) backingMap;
+                return (long) map.getUnits() * (long) map.getUnitFactor();
+                }
+            return -1L;
+            }
+
+        @Override
+        public void readExternal(PofReader in) throws IOException
+            {
+            }
+
+        @Override
+        public void writeExternal(PofWriter out) throws IOException
+            {
+            }
         }
 
     // ----- other tests ----------------------------------------------------
