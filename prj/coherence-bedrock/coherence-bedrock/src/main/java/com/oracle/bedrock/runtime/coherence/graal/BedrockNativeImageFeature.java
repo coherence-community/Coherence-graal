@@ -26,12 +26,28 @@ import java.util.Set;
 public class BedrockNativeImageFeature
         extends AbstractNativeImageFeature
     {
-    /**
-     * Create a Bedrock native image feature.
-     */
-    public BedrockNativeImageFeature()
+    @Override
+    protected Set<Class<?>> getSupertypes()
         {
-        super(SUPERTYPES, SERIALIZABLE_TYPES, ANNOTATIONS, RESOURCES);
+        return SUPERTYPES;
+        }
+
+    @Override
+    protected Set<Class<?>> getSerializableTypes()
+        {
+        return SERIALIZABLE_TYPES;
+        }
+
+    @Override
+    protected Set<Class<? extends Annotation>> getAnnotations()
+        {
+        return ANNOTATIONS;
+        }
+
+    @Override
+    protected Set<String> getResources()
+        {
+        return RESOURCES;
         }
 
     // ----- data members ---------------------------------------------------

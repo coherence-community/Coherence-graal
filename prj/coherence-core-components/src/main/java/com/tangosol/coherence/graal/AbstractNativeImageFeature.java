@@ -45,44 +45,19 @@ import java.util.stream.Collectors;
 public abstract class AbstractNativeImageFeature
         implements Feature
     {
-    /**
-     * Create a native image feature.
-     *
-     * @param handledSuperTypes  all subclasses of these types will be included
-     * @param annotations        all types with these annotations will be included
-     * @param resources          the resources to be registered in the native image
-     */
-    protected AbstractNativeImageFeature(Set<Class<?>> handledSuperTypes,
-                                         Set<Class<? extends Annotation>> annotations,
-                                         Set<String> resources)
-        {
-        this(handledSuperTypes, Set.of(), annotations, resources);
-        }
+    protected abstract Set<Class<?>> getSupertypes();
 
-    /**
-     * Create a native image feature.
-     *
-     * @param superTypes         all subclasses of these types will be included
-     * @param serializableTypes  types to be registered for serialization
-     * @param annotations        all types with these annotations will be included
-     * @param resources          the resources to be registered in the native image
-     */
-    protected AbstractNativeImageFeature(Set<Class<?>> superTypes,
-                                         Set<Class<?>> serializableTypes,
-                                         Set<Class<? extends Annotation>> annotations,
-                                         Set<String> resources)
-        {
-        m_superTypes        = superTypes;
-        m_serializableTypes = serializableTypes;
-        m_annotations       = annotations;
-        m_resources         = resources;
-        }
+    protected abstract Set<Class<?>> getSerializableTypes();
+
+    protected abstract Set<Class<? extends Annotation>> getAnnotations();
+
+    protected abstract Set<String> getResources();
 
     @Override
     public void beforeAnalysis(BeforeAnalysisAccess access)
         {
         Module module = getClass().getModule();
-        for (String resource : m_resources)
+        for (String resource : getResources())
             {
             RuntimeResourceAccess.addResource(module, resource);
             }
@@ -95,7 +70,7 @@ public abstract class AbstractNativeImageFeature
             try
                 {
                 var clazz = Class.forName(classInfo.getName(), false, imageClassLoader);
-                for (Class<?> serializableType : m_serializableTypes)
+                for (Class<?> serializableType : getSerializableTypes())
                     {
                     if (serializableType.isAssignableFrom(clazz))
                         {
@@ -104,6 +79,8 @@ public abstract class AbstractNativeImageFeature
                         registerAllElements(clazz);
                         }
                     }
+
+                processClassBeforeAnalysis(access, clazz);
                 }
             catch (ClassNotFoundException | LinkageError e)
                 {
@@ -125,7 +102,7 @@ public abstract class AbstractNativeImageFeature
                 var clazz = Class.forName(classInfo.getName(), false, imageClassLoader);
                 boolean registered = false;
 
-                for (Class<? extends Annotation> annotation : m_annotations)
+                for (Class<? extends Annotation> annotation : getAnnotations())
                     {
                     if (clazz.getAnnotation(annotation) != null)
                         {
@@ -138,7 +115,7 @@ public abstract class AbstractNativeImageFeature
 
                 if (!registered)
                     {
-                    for (Class<?> handledSuperType : m_superTypes)
+                    for (Class<?> handledSuperType : getSupertypes())
                         {
                         if (!handledSuperType.isAssignableFrom(clazz))
                             {
@@ -148,7 +125,7 @@ public abstract class AbstractNativeImageFeature
                         }
                     }
 
-                processClass(access, clazz);
+                processClassAfterRegistration(access, clazz);
                 }
             catch (ClassNotFoundException | LinkageError e)
                 {
@@ -182,10 +159,20 @@ public abstract class AbstractNativeImageFeature
     /**
      * Perform any custom handling of the specified class.
      *
+     * @param access  the GraalVM {@link BeforeAnalysisAccess}
+     * @param clazz   the class to process
+     */
+    protected void processClassBeforeAnalysis(BeforeAnalysisAccess access, Class<?> clazz)
+        {
+        }
+
+    /**
+     * Perform any custom handling of the specified class.
+     *
      * @param access  the GraalVM {@link AfterRegistrationAccess}
      * @param clazz   the class to process
      */
-    protected void processClass(AfterRegistrationAccess access, Class<?> clazz)
+    protected void processClassAfterRegistration(AfterRegistrationAccess access, Class<?> clazz)
         {
         }
 
@@ -273,26 +260,6 @@ public abstract class AbstractNativeImageFeature
         }
 
     // ----- data members ---------------------------------------------------
-
-    /**
-     * All subclasses annotated of these classes will be included.
-     */
-    private final Set<Class<?>> m_superTypes;
-
-    /**
-     * All subclasses annotated of these classes will be registered for serialization.
-     */
-    private final Set<Class<?>> m_serializableTypes;
-
-    /**
-     * All classes annotated with these annotations will be included.
-     */
-    private final Set<Class<? extends Annotation>> m_annotations;
-
-    /**
-     * The resources to register.
-     */
-    private final Set<String> m_resources;
 
     /**
      * The processed types.

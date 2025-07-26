@@ -34,6 +34,7 @@ import com.tangosol.internal.tracing.TracingShimLoader;
 
 import com.tangosol.internal.util.graal.ScriptHandler;
 
+import com.tangosol.internal.util.invoke.Lambdas;
 import com.tangosol.io.ExternalizableLite;
 import com.tangosol.io.Serializer;
 import com.tangosol.io.SerializerFactory;
@@ -61,13 +62,19 @@ import com.tangosol.run.xml.XmlSerializable;
 
 import com.tangosol.util.HealthCheck;
 
+import org.graalvm.nativeimage.hosted.RuntimeReflection;
 import org.graalvm.nativeimage.hosted.RuntimeResourceAccess;
 import org.graalvm.nativeimage.hosted.RuntimeSerialization;
 
+import java.io.Serializable;
 import java.lang.annotation.Annotation;
 
+import java.nio.file.Path;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.function.BiConsumer;
 
 /**
  * A GraalVM native image {@link org.graalvm.nativeimage.hosted.Feature}
@@ -82,13 +89,70 @@ public class CoherenceNativeImageFeature
      */
     public CoherenceNativeImageFeature()
         {
-        super(SUPERTYPES, SERIALIZABLE_TYPES, ANNOTATIONS, RESOURCES);
+        }
+
+    @Override
+    protected Set<Class<?>> getSupertypes()
+        {
+        HashSet<Class<?>> set = new HashSet<>(SUPERTYPES);
+        set.addAll(functionalInterfaces);
+        return set;
+        }
+
+    @Override
+    protected Set<Class<?>> getSerializableTypes()
+        {
+        HashSet<Class<?>> set = new HashSet<>(SERIALIZABLE_TYPES);
+        set.addAll(functionalInterfaces);
+        return set;
+        }
+
+    @Override
+    protected Set<Class<? extends Annotation>> getAnnotations()
+        {
+        return ANNOTATIONS;
+        }
+
+    @Override
+    protected Set<String> getResources()
+        {
+        return RESOURCES;
         }
 
     @Override
     public void beforeAnalysis(BeforeAnalysisAccess access)
         {
+        ClassLoader imageClassLoader = access.getApplicationClassLoader();
+        List<Path>  classPath        = access.getApplicationClassPath();
+
+        // Find all the classes that are Coherence functional interfaces,
+        // basically any class under a Coherence package annotated with @FunctionalInterface
+        scan(imageClassLoader, classPath, classInfo ->
+            {
+            try
+                {
+                var clazz = Class.forName(classInfo.getName(), false, imageClassLoader);
+                String packageName = clazz.getPackageName();
+
+                if (clazz.isAnnotationPresent(FunctionalInterface.class)
+                        && Serializable.class.isAssignableFrom(clazz)
+                        && (packageName.startsWith("com.oracle.coherence") || packageName.startsWith("com.tangosol")))
+                    {
+                    functionalInterfaces.add(clazz);
+                    access.registerSubtypeReachabilityHandler(LambdaReachableTypeHandler.INSTANCE, clazz);
+                    }
+                }
+            catch (ClassNotFoundException | NoClassDefFoundError e)
+                {
+                // ignore: due to incomplete classpath
+                }
+            });
+
         super.beforeAnalysis(access);
+
+        // Coherence may return empty collections from some calls, so
+        // ensure these classes are registered for serialization
+        // just in case the default serializer is in use
         RuntimeSerialization.register(Collections.EMPTY_LIST.getClass());
         registerAllElements(Collections.EMPTY_LIST.getClass());
         RuntimeSerialization.register(Collections.EMPTY_MAP.getClass());
@@ -98,7 +162,7 @@ public class CoherenceNativeImageFeature
         }
 
     @Override
-    protected void processClass(AfterRegistrationAccess access, Class<?> clazz)
+    protected void processClassAfterRegistration(AfterRegistrationAccess access, Class<?> clazz)
         {
         if (XmlSerializable.class.isAssignableFrom(clazz))
             {
@@ -109,6 +173,35 @@ public class CoherenceNativeImageFeature
         }
 
     // ----- data members ---------------------------------------------------
+
+    public static class LambdaReachableTypeHandler
+            implements BiConsumer<DuringAnalysisAccess, Class<?>>
+        {
+        @Override
+        public void accept(DuringAnalysisAccess access, Class<?> clazz)
+            {
+            if (Lambdas.isLambdaClass(clazz))
+                {
+                try
+                    {
+                    RuntimeReflection.registerMethodLookup(clazz, "writeReplace");
+                    RuntimeSerialization.register(clazz);
+                    registerAllElements(clazz);
+                    }
+                catch (Exception e)
+                    {
+                    // ignored
+                    }
+                }
+            }
+
+        public static final LambdaReachableTypeHandler INSTANCE = new LambdaReachableTypeHandler();
+        }
+
+    /**
+     * Classes in Coherence annotated with {@link FunctionalInterface}.
+     */
+    private final Set<Class<?>> functionalInterfaces = new HashSet<>();
 
     /**
      * All subclasses of these types will be included.
