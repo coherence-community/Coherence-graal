@@ -36,6 +36,7 @@
     <dependency-check.skip>true</dependency-check.skip>
     <skip.docs>true</skip.docs>
     <skip.sources>true</skip.sources>
+    <coherence.native.tests>false</coherence.native.tests>
   </properties>
 
   <build>
@@ -241,133 +242,152 @@
       </properties>
     </profile>
 
-    <!-- the following stages have tests enabled in their respective sub-modules -->
-    <!-- profile>
-      <id>stage2</id>
-      <modules>
-        <module>aggregator</module>
-        <module>bootstrap</module>
-        <module>bundler</module>
-        <module>cache</module>
-        <module>config</module>
-        <module>discovery</module>
-       </modules>
-    </profile -->
+    <!-- GraalVM native image -->
+    <profile>
+      <id>native</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.graalvm.buildtools</groupId>
+            <artifactId>native-maven-plugin</artifactId>
+            <extensions>true</extensions>
+            <executions>
+              <execution>
+                <id>generate-resource-config</id>
+                <goals>
+                  <goal>generateResourceConfig</goal>
+                </goals>
+                <phase>prepare-package</phase>
+                <configuration>
+                  <isDetectionEnabled>true</isDetectionEnabled>
+                </configuration>
+              </execution>
+              <execution>
+                <id>build-native</id>
+                <goals>
+                  <goal>compile-no-fork</goal>
+                </goals>
+                <phase>package</phase>
+                <configuration>
+                  <mainClass>com.oracle.bedrock.runtime.java.JavaApplicationRunner</mainClass>
+                  <quickBuild>true</quickBuild>
+                  <buildArgs>
+                    <buildArg>-march=native</buildArg>
+                    <buildArg>--emit</buildArg>
+                    <buildArg>build-report</buildArg>
+                    <buildArg>--initialize-at-build-time=org.junit.platform.commons.support.scanning.DefaultClasspathScanner</buildArg>
+                    <buildArg>-J-Xmx45g</buildArg>
+                    <buildArg>--enable-sbom=false</buildArg>
+                    <buildArg>--enable-monitoring=jmxserver,jmxclient</buildArg>
+                    <buildArg>-H:+UnlockExperimentalVMOptions</buildArg>
+                    <buildArg>-H:+UseConservativeUnsafeAccess</buildArg>
+<!-- This is to capture a JFR of the compile, it may break tests  -->
+<!--                    <buildArg>-J-XX:StartFlightRecording=dumponexit=true</buildArg>-->
+                  </buildArgs>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
 
-    <!-- profile>
-      <id>stage3</id>
-      <modules>
-        <module>dslquery</module>
-        <module>events</module>
-      </modules>
-    </profile -->
-
-    <!-- profile>
-      <id>stage4</id>
-      <modules>
-        <module>extend</module>
-        <module>extractor</module>
-      </modules>
-    </profile -->
-
-    <!-- profile>
-      <id>stage5</id>
-      <modules>
-        <module>dependencies</module>
-        <module>filter</module>
-        <module>graal</module>
-        <module>guardian</module>
-        <module>io</module>
-        <module>jcache</module>
-        <module>jmx</module>
-        <module>lambda</module>
-        <module>logging</module>
-        <module>memcached</module>
-        <module>near</module>
-        <module>net</module>
-      </modules>
-    </profile -->
-
-    <!-- profile>
-      <id>stage6</id>
-      <modules>
-        <module>partition</module>
-        <module>examples</module>
-      </modules>
-    </profile -->
-
-    <!-- profile>
-      <id>stage7</id>
-      <modules>
-        <module>persistence</module>
-      </modules>
-    </profile -->
-
-    <!-- profile>
-      <id>stage8</id>
-      <modules>
-        <module>grpc</module>
-        <module>grpc-proxy-tck</module>
-        <module>grpc-proxy-helidon</module>
-        <module>grpc-proxy-netty</module>
-        <module>grpc-proxy-gar</module>
-        <module>grpc-client-tck</module>
-        <module>grpc-client-helidon</module>
-        <module>grpc-client-netty</module>
-        <module>processor</module>
-        <module>quorum</module>
-        <module>reporter</module>
-      </modules>
-    </profile -->
-
-    <!-- profile>
-      <id>stage9</id>
-      <modules>
-        <module>http</module>
-        <module>http-config</module>
-        <module>http-netty</module>
-        <module>management</module>
-        <module>wls-management</module>
-        <module>metrics</module>
-        <module>micrometer</module>
-        <module>rest</module>
-        <module>rest-netty</module>
-        <module>rwbm</module>
-        <module>security</module>
-      </modules>
-    </profile -->
-
-    <!-- profile>
-      <id>stage10</id>
-      <modules>
-        <module>cdi</module>
-        <module>cdi-server</module>
-        <module>concurrent</module>
-        <module>concurrent-cdi</module>
-        <module>health</module>
-        <module>session</module>
-        <module>ssl</module>
-        <module>tcmp</module>
-      </modules>
-    </profile -->
-
-    <!-- profile>
-      <id>stage11</id>
-      <modules>
-        <module>topics</module>
-      </modules>
-    </profile -->
-
-    <!-- profile>
-      <id>stage12</id>
-      <modules>
-        <module>tracing</module>
-        <module>transformer</module>
-        <module>trigger</module>
-        <module>util</module>
-        <module>xsd</module>
-      </modules>
-    </profile -->
+    <profile>
+      <id>native-test</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <moditect.skip>true</moditect.skip>
+      </properties>
+      <dependencies>
+        <dependency>
+          <groupId>org.junit.platform</groupId>
+          <artifactId>junit-platform-launcher</artifactId>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.junit.jupiter</groupId>
+          <artifactId>junit-jupiter-engine</artifactId>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.junit.vintage</groupId>
+          <artifactId>junit-vintage-engine</artifactId>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+<!--          <plugin>-->
+<!--            <groupId>org.graalvm.buildtools</groupId>-->
+<!--            <artifactId>native-maven-plugin</artifactId>-->
+<!--            <version>0.11.1-SNAPSHOT</version>-->
+<!--            <extensions>true</extensions>-->
+<!--            <executions>-->
+<!--              <execution>-->
+<!--                <id>native-test</id>-->
+<!--                <goals>-->
+<!--                  <goal>test</goal>-->
+<!--                </goals>-->
+<!--                <phase>verify</phase>-->
+<!--                <configuration>-->
+<!--                  <testClassesDirectory>${project.build.outputDirectory}</testClassesDirectory>-->
+<!--                  <quickBuild>true</quickBuild>-->
+<!--                  <buildArgs>-->
+<!--                    <buildArg>-march=native</buildArg>-->
+<!--                    <buildArg>-J-Xmx45g</buildArg>-->
+<!--                    <buildArg>&#45;&#45;enable-sbom=false</buildArg>-->
+<!--                    <buildArg>-H:+UnlockExperimentalVMOptions</buildArg>-->
+<!--                    <buildArg>-H:+UseConservativeUnsafeAccess</buildArg>-->
+<!--                    <buildArg>-H:+PlatformInterfaceCompatibilityMode</buildArg>-->
+<!--                    <buildArg>&#45;&#45;initialize-at-build-time=org.graalvm.junit.platform.JUnitPlatformFeature</buildArg>-->
+<!--                    <buildArg>&#45;&#45;initialize-at-build-time=org.graalvm.junit.platform.NativeImageConfigurationImpl</buildArg>-->
+<!--                  </buildArgs>-->
+<!--                </configuration>-->
+<!--              </execution>-->
+<!--            </executions>-->
+<!--          </plugin>-->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>${maven.surefire.plugin.version}</version>
+            <configuration>
+              <!-- All tests are run with failsafe when testing with native image -->
+              <skip>true</skip>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <version>${maven.failsafe.plugin.version}</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>integration-test</goal>
+                  <goal>verify</goal>
+                </goals>
+                <configuration>
+                  <!-- All tests are run with failsafe when testing with native image -->
+                  <includes>
+                    <include>**/*Test.java</include>
+                    <include>**/*Tests.java</include>
+                    <include>**/*IT.java</include>
+                  </includes>
+                  <systemPropertyVariables>
+                    <bedrock.profile.native-image>${project.build.directory}/${project.artifactId}</bedrock.profile.native-image>
+                    <bedrock.profile.native-image.classname>com.oracle.bedrock.runtime.coherence.profiles.NativeImageProfile</bedrock.profile.native-image.classname>
+                  </systemPropertyVariables>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
 
     <profile>
       <id>visualvm</id>

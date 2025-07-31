@@ -2915,6 +2915,10 @@ public abstract class ExternalizableHelper
     public static void writeSerializable(DataOutput out, Object o)
             throws IOException
         {
+        if (o instanceof Throwable)
+            {
+            Logger.err("**** JK serializing Throwable", (Throwable) o);
+            }
         if (out instanceof PofOutputStream)
             {
             ((PofOutputStream) out).writeObject(o);

@@ -218,6 +218,9 @@ public abstract class AbstractAsyncEntryAggregatorTests
     public static class CustomFilter
             implements Filter, ExternalizableLite
         {
+        public CustomFilter()
+            {
+            }
 
         public CustomFilter(boolean fFailOnClient)
             {

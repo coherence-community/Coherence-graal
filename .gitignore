@@ -31,3 +31,6 @@ dependency-reduced-pom.xml
 !.gitignore
 !prj/.mvn
 !prj/.mvn/**
+
+native-build.log
+native-test.log
