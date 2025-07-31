@@ -11,6 +11,168 @@
       "type": "char[]"
     },
     {
+      "type": "double[]"
+    },
+    {
+      "type": "float[]"
+    },
+    {
+      "type": "int[]"
+    },
+    {
+      "type": "java.lang.Boolean",
+      "serializable": true,
+      "jniAccessible": true,
+      "fields": [
+        {
+          "name": "TYPE"
+        }
+      ],
+      "methods": [
+        {
+          "name": "getBoolean",
+          "parameterTypes": [
+            "java.lang.String"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "java.lang.Byte",
+      "fields": [
+        {
+          "name": "TYPE"
+        }
+      ]
+    },
+    {
+      "type": "java.lang.Character",
+      "serializable": true,
+      "fields": [
+        {
+          "name": "TYPE"
+        }
+      ]
+    },
+    {
+      "type": "java.lang.Double",
+      "fields": [
+        {
+          "name": "TYPE"
+        }
+      ]
+    },
+    {
+      "type": "java.lang.Float",
+      "fields": [
+        {
+          "name": "TYPE"
+        }
+      ]
+    },
+    {
+      "type": "java.lang.Integer",
+      "serializable": true,
+      "jniAccessible": true,
+      "fields": [
+        {
+          "name": "TYPE"
+        }
+      ],
+      "methods": [
+        {
+          "name": "<init>",
+          "parameterTypes": [
+            "int"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "java.lang.Long",
+      "serializable": true,
+      "fields": [
+        {
+          "name": "TYPE"
+        }
+      ]
+    },
+    {
+      "type": "java.lang.Number",
+      "serializable": true
+    },
+    {
+      "type": "java.lang.Short",
+      "fields": [
+        {
+          "name": "TYPE"
+        }
+      ]
+    },
+    {
+      "type": "java.lang.String",
+      "allDeclaredFields": true,
+      "serializable": true
+    },
+    {
+      "type": "java.lang.String[]"
+    },
+    {
+      "type": "java.lang.StackTraceElement"
+    },
+    {
+      "type": "java.lang.Thread",
+      "methods": [
+        {
+          "name": "getStackTrace",
+          "parameterTypes": []
+        }
+      ]
+    },
+    {
+      "type": "java.lang.Throwable"
+    },
+    {
+      "type": "java.lang.Void",
+      "fields": [
+        {
+          "name": "TYPE"
+        }
+      ]
+    },
+    {
+      "type": "java.lang.Object",
+      "allDeclaredFields": true
+    },
+    {
+      "type": "java.lang.Object[]",
+      "serializable": true
+    },
+    {
+      "type": "java.math.BigDecimal",
+      "serializable": true
+    },
+    {
+      "type": "java.math.BigInteger",
+      "serializable": true
+    },
+    {
+      "type": "java.net.Inet4Address",
+      "serializable": true
+    },
+    {
+      "type": "java.net.Inet6Address",
+      "serializable": true
+    },
+    {
+      "type": "java.net.InetAddress",
+      "serializable": true
+    },
+    {
+      "type": "java.net.InetSocketAddress",
+      "serializable": true
+    },
+    {
       "type": "com.oracle.net.Sdp"
     },
     {
@@ -190,50 +352,6 @@
       ]
     },
     {
-      "type": "com.tangosol.coherence.component.net.management.model.LocalModel[]"
-    },
-    {
-      "type": "com.tangosol.coherence.component.util.DaemonPool$Daemon[]"
-    },
-    {
-      "type": "com.tangosol.internal.util.stream.ReferencePipeline$lambda$unordered$4c7fec84$1$0:065F347FFD9F8E4B928E8FF2568C78A0",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "com.tangosol.util.Aggregators$lambda$sum$ba9765e0$1$0:A68A8188681B4AC87C73F335465D72A3",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": [
-            "com.tangosol.util.function.Remote$ToDoubleFunction"
-          ]
-        }
-      ]
-    },
-    {
-      "type": "com.tangosol.util.function.Remote$Function$lambda$identity$1cd84d30$1$0:5FCE1857B36D8C45FFD114F580B4FDB7",
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "double[]"
-    },
-    {
-      "type": "float[]"
-    },
-    {
-      "type": "int[]"
-    },
-    {
       "type": "io.opentelemetry.sdk.autoconfigure.AutoConfiguredOpenTelemetrySdk"
     },
     {
@@ -284,138 +402,6 @@
         {
           "name": "getObjectInputFilter",
           "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "java.lang.Boolean",
-      "serializable": true,
-      "jniAccessible": true,
-      "fields": [
-        {
-          "name": "TYPE"
-        }
-      ],
-      "methods": [
-        {
-          "name": "getBoolean",
-          "parameterTypes": [
-            "java.lang.String"
-          ]
-        }
-      ]
-    },
-    {
-      "type": "java.lang.Byte",
-      "fields": [
-        {
-          "name": "TYPE"
-        }
-      ]
-    },
-    {
-      "type": "java.lang.Character",
-      "serializable": true,
-      "fields": [
-        {
-          "name": "TYPE"
-        }
-      ]
-    },
-    {
-      "type": "java.lang.Deprecated"
-    },
-    {
-      "type": "java.lang.Double",
-      "fields": [
-        {
-          "name": "TYPE"
-        }
-      ]
-    },
-    {
-      "type": "java.lang.Float",
-      "fields": [
-        {
-          "name": "TYPE"
-        }
-      ]
-    },
-    {
-      "type": "java.lang.Integer",
-      "serializable": true,
-      "jniAccessible": true,
-      "fields": [
-        {
-          "name": "TYPE"
-        }
-      ],
-      "methods": [
-        {
-          "name": "<init>",
-          "parameterTypes": [
-            "int"
-          ]
-        }
-      ]
-    },
-    {
-      "type": "java.lang.Long",
-      "serializable": true,
-      "fields": [
-        {
-          "name": "TYPE"
-        }
-      ]
-    },
-    {
-      "type": "java.lang.Number",
-      "serializable": true
-    },
-    {
-      "type": "java.lang.Object",
-      "allDeclaredFields": true
-    },
-    {
-      "type": "java.lang.Object[]",
-      "serializable": true
-    },
-    {
-      "type": "java.lang.Short",
-      "fields": [
-        {
-          "name": "TYPE"
-        }
-      ]
-    },
-    {
-      "type": "java.lang.StackTraceElement"
-    },
-    {
-      "type": "java.lang.String",
-      "allDeclaredFields": true,
-      "serializable": true
-    },
-    {
-      "type": "java.lang.String[]"
-    },
-    {
-      "type": "java.lang.Thread",
-      "methods": [
-        {
-          "name": "getStackTrace",
-          "parameterTypes": []
-        }
-      ]
-    },
-    {
-      "type": "java.lang.Throwable"
-    },
-    {
-      "type": "java.lang.Void",
-      "fields": [
-        {
-          "name": "TYPE"
         }
       ]
     },
@@ -696,27 +682,6 @@
     },
     {
       "type": "java.lang.management.ThreadInfo"
-    },
-    {
-      "type": "java.math.BigDecimal"
-    },
-    {
-      "type": "java.math.BigInteger"
-    },
-    {
-      "type": "java.net.Inet4Address",
-      "serializable": true
-    },
-    {
-      "type": "java.net.Inet6Address",
-      "serializable": true
-    },
-    {
-      "type": "java.net.InetAddress",
-      "serializable": true
-    },
-    {
-      "type": "java.net.InetSocketAddress"
     },
     {
       "type": "java.rmi.server.RemoteObject",
@@ -1204,18 +1169,6 @@
   ],
   "resources": [
     {
-      "glob": "/tangosol-coherence-override-dev.xml"
-    },
-    {
-      "glob": "/tangosol-coherence-override-eval.xml"
-    },
-    {
-      "glob": "/tangosol-coherence-override-prod.xml"
-    },
-    {
-      "glob": "/tangosol-coherence-override.xml"
-    },
-    {
       "glob": "META-INF/pof.idx"
     },
     {
@@ -1241,9 +1194,6 @@
     },
     {
       "glob": "pof-config.xml"
-    },
-    {
-      "glob": "processor-dictionary.xml"
     },
     {
       "module": "java.base",
