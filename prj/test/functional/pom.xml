@@ -278,12 +278,14 @@
                     <buildArg>-march=native</buildArg>
                     <buildArg>--emit</buildArg>
                     <buildArg>build-report</buildArg>
-                    <buildArg>--initialize-at-build-time=org.junit.platform.commons.support.scanning.DefaultClasspathScanner</buildArg>
                     <buildArg>-J-Xmx45g</buildArg>
-                    <buildArg>--enable-sbom=false</buildArg>
-                    <buildArg>--enable-monitoring=jmxserver,jmxclient</buildArg>
                     <buildArg>-H:+UnlockExperimentalVMOptions</buildArg>
                     <buildArg>-H:+UseConservativeUnsafeAccess</buildArg>
+                    <buildArg>--enable-sbom=false</buildArg>
+                    <!-- Required for tests that use JMX -->
+                    <buildArg>--enable-monitoring=jmxserver,jmxclient</buildArg>
+                    <!-- Required for tests that add -XX:+HeapDumpOnOutOfMemoryError -->
+                    <buildArg>--enable-monitoring=heapdump</buildArg>
 <!-- This is to capture a JFR of the compile, it may break tests  -->
 <!--                    <buildArg>-J-XX:StartFlightRecording=dumponexit=true</buildArg>-->
                   </buildArgs>
