@@ -1,0 +1,8 @@
+{
+  "reflection": [
+     {
+      "type": "topics.data.Customer",
+      "serializable": true
+    }
+  ]
+}
