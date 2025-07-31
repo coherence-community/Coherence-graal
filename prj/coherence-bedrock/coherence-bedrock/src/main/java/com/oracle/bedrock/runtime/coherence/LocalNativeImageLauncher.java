@@ -48,4 +48,10 @@ public class LocalNativeImageLauncher<A extends JavaApplication>
         {
         // Nothing to do for native images
         }
+
+    @Override
+    protected void processApplicationLauncherClassName(LocalProcessBuilder processBuilder, OptionsByType launchOptions, Table diagnosticsTable)
+        {
+        // Nothing to do for native images
+        }
     }
