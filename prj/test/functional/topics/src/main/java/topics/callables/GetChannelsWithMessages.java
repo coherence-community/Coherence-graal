@@ -14,7 +14,6 @@ import com.tangosol.net.Coherence;
 import com.tangosol.net.PagedTopicService;
 import com.tangosol.net.Session;
 import com.tangosol.net.topic.NamedTopic;
-import com.tangosol.util.ImmutableArrayList;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -43,10 +42,7 @@ public class GetChannelsWithMessages
                 .map(Page.Key::getChannelId)
                 .collect(Collectors.toSet());
         Logger.info("Invoked GetChannelsWithMessages, result=" + set);
-
-        Set<Integer> result = new ImmutableArrayList();
-        result.addAll(set);
-        return result;
+        return set;
         }
     
     private final String m_sTopicName;
