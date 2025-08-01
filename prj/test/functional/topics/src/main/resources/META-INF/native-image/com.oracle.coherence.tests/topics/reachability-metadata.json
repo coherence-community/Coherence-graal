@@ -1,6 +1,10 @@
 {
   "reflection": [
      {
+      "type": "topics.data.Address",
+      "serializable": true
+    },
+     {
       "type": "topics.data.Customer",
       "serializable": true
     }
