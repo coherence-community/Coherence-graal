@@ -36,7 +36,7 @@
     <dependency-check.skip>true</dependency-check.skip>
     <skip.docs>true</skip.docs>
     <skip.sources>true</skip.sources>
-    <coherence.native.tests>false</coherence.native.tests>
+    <skip.native.build>false</skip.native.build>
   </properties>
 
   <build>
@@ -272,6 +272,7 @@
                 </goals>
                 <phase>package</phase>
                 <configuration>
+                  <skip>${skip.native.build}</skip>
                   <mainClass>com.oracle.bedrock.runtime.java.JavaApplicationRunner</mainClass>
                   <quickBuild>true</quickBuild>
                   <buildArgs>
@@ -282,6 +283,9 @@
                     <buildArg>-H:+UnlockExperimentalVMOptions</buildArg>
                     <buildArg>-H:+UseConservativeUnsafeAccess</buildArg>
                     <buildArg>--enable-sbom=false</buildArg>
+                    <!-- Required for using http e.g. metrics, management, etc... -->
+                    <buildArg>--enable-http</buildArg>
+                    <buildArg>--enable-https</buildArg>
                     <!-- Required for tests that use JMX -->
                     <buildArg>--enable-monitoring=jmxserver,jmxclient</buildArg>
                     <!-- Required for tests that add -XX:+HeapDumpOnOutOfMemoryError -->
@@ -293,6 +297,34 @@
                 </configuration>
               </execution>
             </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>native-agent</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <agent>true</agent>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.graalvm.buildtools</groupId>
+            <artifactId>native-maven-plugin</artifactId>
+            <extensions>true</extensions>
+            <configuration>
+              <agent>
+                <enabled>true</enabled>
+                <defaultMode>Standard</defaultMode>
+                <metadataCopy>
+                  <!-- you can specify metadataCopy configuration here -->
+                </metadataCopy>
+              </agent>
+            </configuration>
           </plugin>
         </plugins>
       </build>
@@ -382,6 +414,7 @@
                 </goals>
                 <configuration>
                   <!-- All tests are run with failsafe when testing with native image -->
+                  <skip>${skip.native.build}</skip>
                   <includes>
                     <include>**/*Test.java</include>
                     <include>**/*Tests.java</include>
