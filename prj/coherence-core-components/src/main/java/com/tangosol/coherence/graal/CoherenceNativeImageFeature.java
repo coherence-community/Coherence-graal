@@ -62,6 +62,7 @@ import com.tangosol.net.management.MapJsonBodyHandler;
 import com.tangosol.net.metrics.MetricsRegistryAdapter;
 
 import com.tangosol.net.topic.TopicException;
+import com.tangosol.net.topic.TopicPublisherException;
 import com.tangosol.run.xml.PropertyAdapter;
 import com.tangosol.run.xml.XmlSerializable;
 
@@ -279,6 +280,7 @@ public class CoherenceNativeImageFeature
             AbstractSparseArray.Node.class,
             AbstractInvocable.class,
             TopicException.class,
+            TopicPublisherException.class,
             Number.class,
             Model.class,
             SerializedLambda.class, // lambdas
