@@ -307,19 +307,20 @@
       </properties>
       <dependencies>
         <dependency>
+          <groupId>org.junit.jupiter</groupId>
+          <artifactId>junit-jupiter-params</artifactId>
+        </dependency>
+        <dependency>
           <groupId>org.junit.platform</groupId>
           <artifactId>junit-platform-launcher</artifactId>
-          <scope>test</scope>
         </dependency>
         <dependency>
           <groupId>org.junit.jupiter</groupId>
           <artifactId>junit-jupiter-engine</artifactId>
-          <scope>test</scope>
         </dependency>
         <dependency>
           <groupId>org.junit.vintage</groupId>
           <artifactId>junit-vintage-engine</artifactId>
-          <scope>test</scope>
         </dependency>
       </dependencies>
       <build>
@@ -341,11 +342,17 @@
 <!--                  <quickBuild>true</quickBuild>-->
 <!--                  <buildArgs>-->
 <!--                    <buildArg>-march=native</buildArg>-->
+<!--                    <buildArg>&#45;&#45;emit</buildArg>-->
+<!--                    <buildArg>build-report</buildArg>-->
 <!--                    <buildArg>-J-Xmx45g</buildArg>-->
-<!--                    <buildArg>&#45;&#45;enable-sbom=false</buildArg>-->
 <!--                    <buildArg>-H:+UnlockExperimentalVMOptions</buildArg>-->
 <!--                    <buildArg>-H:+UseConservativeUnsafeAccess</buildArg>-->
 <!--                    <buildArg>-H:+PlatformInterfaceCompatibilityMode</buildArg>-->
+<!--                    <buildArg>&#45;&#45;enable-sbom=false</buildArg>-->
+<!--                    &lt;!&ndash; Required for tests that use JMX &ndash;&gt;-->
+<!--                    <buildArg>&#45;&#45;enable-monitoring=jmxserver,jmxclient</buildArg>-->
+<!--                    &lt;!&ndash; Required for tests that add -XX:+HeapDumpOnOutOfMemoryError &ndash;&gt;-->
+<!--                    <buildArg>&#45;&#45;enable-monitoring=heapdump</buildArg>-->
 <!--                    <buildArg>&#45;&#45;initialize-at-build-time=org.graalvm.junit.platform.JUnitPlatformFeature</buildArg>-->
 <!--                    <buildArg>&#45;&#45;initialize-at-build-time=org.graalvm.junit.platform.NativeImageConfigurationImpl</buildArg>-->
 <!--                  </buildArgs>-->
