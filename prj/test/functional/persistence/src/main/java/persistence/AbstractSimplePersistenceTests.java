@@ -274,10 +274,11 @@ public abstract class AbstractSimplePersistenceTests
         {
         File fileSnapshot = FileHelper.createTempDir();
         File fileTrash    = FileHelper.createTempDir();
+        File fileActive   = FileHelper.createTempDir();
 
         Properties props = new Properties();
         props.setProperty("test.persistence.mode", "on-demand");
-        props.setProperty("test.persistence.active.dir", "");
+        props.setProperty("test.persistence.active.dir", fileActive.getAbsolutePath());
         props.setProperty("test.persistence.trash.dir", fileTrash.getAbsolutePath());
         props.setProperty("test.persistence.snapshot.dir", fileSnapshot.getAbsolutePath());
         props.setProperty("test.partitioned.backingmap", fPart ? "true" : "false");
@@ -333,6 +334,7 @@ public abstract class AbstractSimplePersistenceTests
             CacheFactory.shutdown();
 
             FileHelper.deleteDirSilent(fileSnapshot);
+            FileHelper.deleteDirSilent(fileActive);
             FileHelper.deleteDirSilent(fileTrash);
             }
         }
