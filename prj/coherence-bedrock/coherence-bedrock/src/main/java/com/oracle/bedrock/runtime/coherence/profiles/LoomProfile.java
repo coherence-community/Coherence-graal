@@ -51,6 +51,11 @@ public class LoomProfile
             {
             optionsByType.add(SystemProperty.of(PROPERTY_ENABLED, m_fEnabled));
             }
+        else
+            {
+            Object value = property.getValue();
+            optionsByType.add(SystemProperty.of(PROPERTY_ENABLED, "".equals(value) ? "false" : value));
+            }
         }
 
     @Override
