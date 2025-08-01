@@ -286,6 +286,7 @@
                     <buildArg>--enable-monitoring=jmxserver,jmxclient</buildArg>
                     <!-- Required for tests that add -XX:+HeapDumpOnOutOfMemoryError -->
                     <buildArg>--enable-monitoring=heapdump</buildArg>
+                    <buildArg>--initialize-at-build-time=org.junit.platform.commons.support.scanning.DefaultClasspathScanner</buildArg>
 <!-- This is to capture a JFR of the compile, it may break tests  -->
 <!--                    <buildArg>-J-XX:StartFlightRecording=dumponexit=true</buildArg>-->
                   </buildArgs>
