@@ -53,7 +53,6 @@ import com.tangosol.coherence.config.Config;
 import com.tangosol.internal.util.invoke.Lambdas;
 
 import com.tangosol.io.ExternalizableLite;
-import com.tangosol.io.pof.PortableObject;
 import com.tangosol.net.CacheFactory;
 import com.tangosol.net.CacheFactoryBuilder;
 import com.tangosol.net.CacheService;
@@ -80,7 +79,6 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.rules.TestName;
-import org.junit.rules.TestWatcher;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -100,6 +98,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import java.security.PrivilegedAction;
 
+import static com.oracle.bedrock.deferred.DeferredHelper.invoking;
 import static com.oracle.bedrock.deferred.DeferredHelper.within;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
@@ -756,7 +755,6 @@ public abstract class AbstractTestInfrastructure
                 }
             catch (Throwable err)
                 {
-                err.printStackTrace();
                 // take a thread dump of the member that timed out
                 System.out.println("Thread dump on server: " + member.getRoleName());
                 System.out.println(member.invoke(new RemoteThreadDump()));
