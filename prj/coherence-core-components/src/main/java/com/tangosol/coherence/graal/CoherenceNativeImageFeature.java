@@ -47,6 +47,7 @@ import com.tangosol.io.pof.PortableException;
 import com.tangosol.io.pof.PortableObject;
 import com.tangosol.io.pof.schema.annotation.PortableType;
 
+import com.tangosol.net.AbstractInvocable;
 import com.tangosol.net.Coherence;
 import com.tangosol.net.MemberIdentityProvider;
 import com.tangosol.net.SessionConfiguration;
@@ -276,6 +277,7 @@ public class CoherenceNativeImageFeature
             LongArray.class,
             AbstractSparseArray.class,
             AbstractSparseArray.Node.class,
+            AbstractInvocable.class,
             TopicException.class,
             Number.class,
             Model.class,
