@@ -16,6 +16,7 @@ import com.oracle.bedrock.runtime.MetaClass;
 import com.oracle.bedrock.runtime.Platform;
 import com.oracle.bedrock.runtime.Profile;
 
+import com.oracle.bedrock.runtime.Profiles;
 import com.oracle.bedrock.runtime.coherence.LocalNativeImageLauncher;
 
 import com.oracle.bedrock.runtime.java.ClassPath;
@@ -59,6 +60,16 @@ public class NativeImageProfile
     @Override
     public void onClosing(Platform platform, Application application, OptionsByType optionsByType)
         {
+        }
+
+    /**
+     * Return {@code true} if the {@link NativeImageProfile} is enabled.
+     *
+     * @return  {@code true} if the {@link NativeImageProfile} is enabled
+     */
+    public static boolean isEnabled()
+        {
+        return Profiles.getProfiles().contains(NativeImageProfile.class);
         }
 
     // ----- data members ---------------------------------------------------

@@ -23,6 +23,7 @@ import com.oracle.bedrock.runtime.coherence.options.LocalHost;
 import com.oracle.bedrock.runtime.coherence.options.LocalStorage;
 import com.oracle.bedrock.runtime.coherence.options.Logging;
 
+import com.oracle.bedrock.runtime.coherence.profiles.NativeImageProfile;
 import com.oracle.bedrock.runtime.concurrent.RemoteCallable;
 import com.oracle.bedrock.runtime.concurrent.RemoteRunnable;
 import com.oracle.bedrock.runtime.concurrent.runnable.RuntimeHalt;
@@ -901,6 +902,7 @@ public abstract class BaseManagementInfoResourceTests
     public void testMemberDumpHeap()
         {
         Assume.assumeFalse("Skipping as management is read-only", isReadOnly());
+        Assume.assumeFalse("Skipping test when running GraalVM native image", NativeImageProfile.isEnabled());
 
         WebTarget target   = getBaseTarget();
         Response  response = target.request().get();

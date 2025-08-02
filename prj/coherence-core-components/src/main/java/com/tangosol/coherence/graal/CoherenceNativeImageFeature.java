@@ -84,6 +84,7 @@ import java.io.Serializable;
 import java.lang.annotation.Annotation;
 
 import java.lang.invoke.SerializedLambda;
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.file.Path;
@@ -165,6 +166,8 @@ public class CoherenceNativeImageFeature
         RuntimeSerialization.register(Exception.class);
         RuntimeSerialization.register(RuntimeException.class);
         RuntimeSerialization.register(WrapperException.class);
+        RuntimeSerialization.register(ReflectiveOperationException.class);
+        RuntimeSerialization.register(InvocationTargetException.class);
 
         RuntimeSerialization.register(BigDecimal.class);
         RuntimeSerialization.register(BigInteger.class);
