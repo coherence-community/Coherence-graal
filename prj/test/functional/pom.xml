@@ -287,11 +287,13 @@
                     <buildArg>--enable-http</buildArg>
                     <buildArg>--enable-https</buildArg>
                     <!-- Required for tests that use JMX -->
-                    <buildArg>--enable-monitoring=jmxserver,jmxclient</buildArg>
+                    <buildArg>--enable-monitoring=jmxserver,jmxclient,jvmstat</buildArg>
                     <!-- Required for tests that add -XX:+HeapDumpOnOutOfMemoryError -->
                     <buildArg>--enable-monitoring=heapdump</buildArg>
+                    <!-- Required for tests that use JFRs, for example, management tests -->
+                    <buildArg>--enable-monitoring=jfr</buildArg>
                     <buildArg>--initialize-at-build-time=org.junit.platform.commons.support.scanning.DefaultClasspathScanner</buildArg>
-<!-- This is to capture a JFR of the compile, it may break tests  -->
+<!-- This is to capture a JFR of the native image compiler; it may break tests -->
 <!--                    <buildArg>-J-XX:StartFlightRecording=dumponexit=true</buildArg>-->
                   </buildArgs>
                 </configuration>
