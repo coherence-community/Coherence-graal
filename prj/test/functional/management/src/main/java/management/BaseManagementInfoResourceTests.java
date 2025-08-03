@@ -416,12 +416,19 @@ public abstract class BaseManagementInfoResourceTests
                 {
                 target   = getBaseTarget().path(MEMBERS).path(memberId.toString()).path("platform").path(mbean);
                 response = target.request().get();
-                assertThat("unexpected response for Mgmt over REST API "
-                        + getBaseTarget().getUri().toString() + "/" + MEMBERS + "/" + memberId
-                        + "/platform/" + mbean, response.getStatus(), is(Response.Status.OK.getStatusCode()));
-                mapResponse = readEntity(target, response);
-                String sTypeValue = (String) mapResponse.get("type");
-                assertThat(sTypeValue, is("HEAP"));
+                if (NativeImageProfile.isEnabled())
+                    {
+                    assertThat(response.getStatus(), is(Response.Status.NOT_FOUND.getStatusCode()));
+                    }
+                else
+                    {
+                    assertThat("unexpected response for Mgmt over REST API "
+                            + getBaseTarget().getUri().toString() + "/" + MEMBERS + "/" + memberId
+                            + "/platform/" + mbean, response.getStatus(), is(Response.Status.OK.getStatusCode()));
+                    mapResponse = readEntity(target, response);
+                    String sTypeValue = (String) mapResponse.get("type");
+                    assertThat(sTypeValue, is("HEAP"));
+                    }
                 }
             }
         }
@@ -452,8 +459,15 @@ public abstract class BaseManagementInfoResourceTests
 
             Response response = target.request().get();
             assertThat(target.getUri().toString(), response.getStatus(), is(Response.Status.OK.getStatusCode()));
-            Map mapResponse = readEntity(target, response);
-            assertThat(mapResponse.size(), greaterThan(0));
+            if (NativeImageProfile.isEnabled())
+                {
+                assertThat(response.getStatus(), is(Response.Status.NOT_FOUND.getStatusCode()));
+                }
+            else
+                {
+                Map mapResponse = readEntity(target, response);
+                assertThat(mapResponse.size(), greaterThan(0));
+                }
             }
         }
 
@@ -467,9 +481,16 @@ public abstract class BaseManagementInfoResourceTests
             Logger.info("Executing Management over REST request to URL: " + target.getUri().toString());
 
             Response response = target.request().get();
-            assertThat(target.getUri().toString(), response.getStatus(), is(Response.Status.OK.getStatusCode()));
-            Map mapResponse = readEntity(target, response);
-            assertThat(mapResponse.size(), greaterThan(0));
+            if (NativeImageProfile.isEnabled())
+                {
+                assertThat(response.getStatus(), is(Response.Status.NOT_FOUND.getStatusCode()));
+                }
+            else
+                {
+                assertThat(target.getUri().toString(), response.getStatus(), is(Response.Status.OK.getStatusCode()));
+                Map mapResponse = readEntity(target, response);
+                assertThat(mapResponse.size(), greaterThan(0));
+                }
             }
         }
 
@@ -483,9 +504,16 @@ public abstract class BaseManagementInfoResourceTests
             Logger.info("Executing Management over REST request to URL: " + target.getUri().toString());
 
             Response response = target.request().get();
-            assertThat(target.getUri().toString(), response.getStatus(), is(Response.Status.OK.getStatusCode()));
-            Map mapResponse = readEntity(target, response);
-            assertThat(mapResponse.size(), greaterThan(0));
+            if (NativeImageProfile.isEnabled())
+                {
+                assertThat(response.getStatus(), is(Response.Status.NOT_FOUND.getStatusCode()));
+                }
+            else
+                {
+                assertThat(target.getUri().toString(), response.getStatus(), is(Response.Status.OK.getStatusCode()));
+                Map mapResponse = readEntity(target, response);
+                assertThat(mapResponse.size(), greaterThan(0));
+                }
             }
         }
 
@@ -511,9 +539,16 @@ public abstract class BaseManagementInfoResourceTests
             Logger.info(target.getUri().toString());
 
             response = target.request().get();
-            assertThat(response.getStatus(), is(Response.Status.OK.getStatusCode()));
-            mapResponse = readEntity(target, response);
-            assertThat(mapResponse.size(), greaterThan(0));
+            if (NativeImageProfile.isEnabled())
+                {
+                assertThat(response.getStatus(), is(Response.Status.NOT_FOUND.getStatusCode()));
+                }
+            else
+                {
+                assertThat(response.getStatus(), is(Response.Status.OK.getStatusCode()));
+                mapResponse = readEntity(target, response);
+                assertThat(mapResponse.size(), greaterThan(0));
+                }
             }
         }
 
@@ -541,9 +576,16 @@ public abstract class BaseManagementInfoResourceTests
             Logger.info(target.getUri().toString());
 
             response = target.request().get();
-            assertThat(response.getStatus(), is(Response.Status.OK.getStatusCode()));
-            mapResponse = readEntity(target, response);
-            assertThat(mapResponse.size(), greaterThan(0));
+            if (NativeImageProfile.isEnabled())
+                {
+                assertThat(response.getStatus(), is(Response.Status.NOT_FOUND.getStatusCode()));
+                }
+            else
+                {
+                assertThat(response.getStatus(), is(Response.Status.OK.getStatusCode()));
+                mapResponse = readEntity(target, response);
+                assertThat(mapResponse.size(), greaterThan(0));
+                }
             }
         }
 
@@ -1042,6 +1084,7 @@ public abstract class BaseManagementInfoResourceTests
             throws Exception
         {
         Assume.assumeFalse("Skipping as management is read-only", isReadOnly());
+        Assume.assumeFalse("Test skipped when running native image", NativeImageProfile.isEnabled());
 
         // This test requires Flight Recorder and only runs on Oracle JVMs
         CheckJDK.assumeOracleJDK();
@@ -1110,6 +1153,7 @@ public abstract class BaseManagementInfoResourceTests
             throws Exception
         {
         Assume.assumeFalse("Skipping as management is read-only", isReadOnly());
+        Assume.assumeFalse("Test skipped when running native image", NativeImageProfile.isEnabled());
 
         // This test requires Flight Recorder and only runs on Oracle JVMs
         CheckJDK.assumeOracleJDK();
@@ -1149,6 +1193,7 @@ public abstract class BaseManagementInfoResourceTests
         {
         // This test requires Flight Recorder and only runs on Oracle JVMs
         CheckJDK.assumeOracleJDK();
+        Assume.assumeFalse("Test skipped when running native image", NativeImageProfile.isEnabled());
 
         String   sJfr1    = s_dirJFR.getAbsolutePath() + File.separator + "foo1.jfr";
         String   sJfr2    = s_dirJFR.getAbsolutePath() + File.separator + "foo2.jfr";
@@ -1247,6 +1292,7 @@ public abstract class BaseManagementInfoResourceTests
         {
         // This test requires Flight Recorder and only runs on Oracle JVMs
         CheckJDK.assumeOracleJDK();
+        Assume.assumeFalse("Test skipped when running native image", NativeImageProfile.isEnabled());
 
         MBeanServerConnection mBeanServer;
         ObjectName            oName;
