@@ -7,6 +7,7 @@
 
 package grpc.client;
 
+import com.tangosol.io.ExternalizableLite;
 import com.tangosol.io.pof.PofReader;
 import com.tangosol.io.pof.PofWriter;
 import com.tangosol.io.pof.PortableObject;
@@ -17,7 +18,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Person
-        implements Serializable, PortableObject
+        implements ExternalizableLite, PortableObject
     {
     // ----- constructors ---------------------------------------------------
 
