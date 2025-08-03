@@ -57,6 +57,7 @@ import com.tangosol.net.events.InterceptorMetadataResolver;
 
 import com.tangosol.net.grpc.GrpcAcceptorController;
 
+import com.tangosol.net.management.MBeanAccessor;
 import com.tangosol.net.management.MapJsonBodyHandler;
 
 import com.tangosol.net.metrics.MetricsRegistryAdapter;
@@ -70,6 +71,7 @@ import com.tangosol.util.AbstractSparseArray;
 import com.tangosol.util.HealthCheck;
 
 import com.tangosol.util.LongArray;
+import com.tangosol.util.WrapperCollections;
 import com.tangosol.util.WrapperException;
 import com.tangosol.util.extractor.AbstractExtractor;
 import org.graalvm.nativeimage.hosted.RuntimeReflection;
@@ -168,6 +170,7 @@ public class CoherenceNativeImageFeature
         RuntimeSerialization.register(WrapperException.class);
         RuntimeSerialization.register(ReflectiveOperationException.class);
         RuntimeSerialization.register(InvocationTargetException.class);
+        RuntimeSerialization.register(MBeanAccessor.QueryBuilder.ParsedQuery.class);
 
         RuntimeSerialization.register(BigDecimal.class);
         RuntimeSerialization.register(BigInteger.class);
@@ -209,12 +212,12 @@ public class CoherenceNativeImageFeature
             {
             if (processed.add(clazz))
                 {
+                RuntimeSerialization.register(clazz);
                 if (Lambdas.isLambdaClass(clazz))
                     {
                     try
                         {
                         RuntimeReflection.registerMethodLookup(clazz, "writeReplace");
-                        RuntimeSerialization.register(clazz);
                         }
                     catch (Exception e)
                         {
@@ -290,7 +293,10 @@ public class CoherenceNativeImageFeature
             MBeanInfo.class, // MBeans
             MBeanFeatureInfo.class, // MBeans
             Descriptor.class, // MBeans
-            SerializationSupport.class);
+            SerializationSupport.class,
+            WrapperCollections.AbstractWrapperCollection.class,
+            WrapperCollections.AbstractWrapperEntry.class,
+            WrapperCollections.AbstractWrapperMap.class);
 
     /**
      * All types with these annotations will be included.
