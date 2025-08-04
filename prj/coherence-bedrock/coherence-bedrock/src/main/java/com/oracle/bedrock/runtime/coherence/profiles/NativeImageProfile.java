@@ -17,10 +17,12 @@ import com.oracle.bedrock.runtime.Platform;
 import com.oracle.bedrock.runtime.Profile;
 
 import com.oracle.bedrock.runtime.Profiles;
+import com.oracle.bedrock.runtime.coherence.CoherenceClusterMember;
 import com.oracle.bedrock.runtime.coherence.LocalNativeImageLauncher;
 
 import com.oracle.bedrock.runtime.java.ClassPath;
 
+import com.oracle.bedrock.runtime.java.JavaApplication;
 import com.oracle.bedrock.runtime.options.Executable;
 
 /**
@@ -33,7 +35,11 @@ public class NativeImageProfile
     @SuppressWarnings({"rawtypes", "unchecked"})
     public <A extends Application> ApplicationLauncher<A> getLauncher(MetaClass<A> metaClass)
         {
-        return new LocalNativeImageLauncher();
+        if (metaClass instanceof JavaApplication.MetaClass || metaClass instanceof CoherenceClusterMember.MetaClass)
+            {
+            return new LocalNativeImageLauncher();
+            }
+        return null;
         }
 
     /**
