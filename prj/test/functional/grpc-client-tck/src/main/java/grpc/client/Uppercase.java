@@ -7,7 +7,6 @@
 
 package grpc.client;
 
-import com.tangosol.io.ExternalizableLite;
 import com.tangosol.io.pof.PofReader;
 import com.tangosol.io.pof.PofWriter;
 import com.tangosol.io.pof.PortableObject;
@@ -24,7 +23,7 @@ import java.io.IOException;
  */
 public class Uppercase
         implements InvocableMap.EntryProcessor<String, Person, Object>,
-                   PortableObject, ExternalizableLite
+                   PortableObject
 
     {
     // ----- InvocableMap.EntryProcessor methods ----------------------------

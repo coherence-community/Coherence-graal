@@ -7,7 +7,6 @@
 
 package grpc.client;
 
-import com.tangosol.io.ExternalizableLite;
 import com.tangosol.io.pof.PofReader;
 import com.tangosol.io.pof.PofWriter;
 import com.tangosol.io.pof.PortableObject;
@@ -25,7 +24,7 @@ import java.util.Set;
  * @since 14.1.1.2206.5
  */
 public class UnusableAggregator<K, V, R>
-        implements InvocableMap.EntryAggregator<K, V, R>, ExternalizableLite, PortableObject
+        implements InvocableMap.EntryAggregator<K, V, R>, Serializable, PortableObject
     {
     // ----- EntryAggregator interface ---------------------------------------
 

@@ -1,0 +1,16 @@
+{
+  "reflection": [
+     {
+      "type": "grpc.client.Person",
+      "serializable": true
+    },
+     {
+      "type": "grpc.client.UnusableAggregator",
+      "serializable": true
+    },
+     {
+      "type": "grpc.client.Uppercase",
+      "serializable": true
+    }
+  ]
+}
