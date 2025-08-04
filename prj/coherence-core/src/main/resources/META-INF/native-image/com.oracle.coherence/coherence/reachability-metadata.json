@@ -173,6 +173,18 @@
       "serializable": true
     },
     {
+      "type": "java.time.Ser",
+      "serializable": true
+    },
+    {
+      "type": "java.time.chrono.Ser",
+      "serializable": true
+    },
+    {
+      "type": "java.time.zone.Ser",
+      "serializable": true
+    },
+    {
       "type": "com.oracle.net.Sdp"
     },
     {
