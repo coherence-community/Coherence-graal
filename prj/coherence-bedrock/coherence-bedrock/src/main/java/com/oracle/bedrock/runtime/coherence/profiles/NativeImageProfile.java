@@ -69,7 +69,7 @@ public class NativeImageProfile
      */
     public static boolean isEnabled()
         {
-        return Profiles.getProfiles().contains(NativeImageProfile.class);
+        return Profiles.getProfiles().get(NativeImageProfile.class) != null;
         }
 
     // ----- data members ---------------------------------------------------

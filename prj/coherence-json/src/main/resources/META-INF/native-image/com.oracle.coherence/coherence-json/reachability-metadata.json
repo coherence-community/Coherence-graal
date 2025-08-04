@@ -4,6 +4,14 @@
       "type": "com.oracle.coherence.io.json.GensonBundleProvider"
     },
     {
+      "type": "com.oracle.coherence.io.json.internal.JsonPortableException",
+      "serializable": true,
+      "allDeclaredConstructors": true,
+      "allPublicConstructors": true,
+      "allDeclaredMethods": true,
+      "allPublicMethods": true
+    },
+    {
       "type": "com.oracle.coherence.io.json.CoherenceBundleProvider"
     }
   ]

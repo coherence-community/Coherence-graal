@@ -2,15 +2,36 @@
   "reflection": [
      {
       "type": "grpc.client.Person",
-      "serializable": true
+      "serializable": true,
+       "allDeclaredConstructors": true,
+       "allPublicConstructors": true,
+       "allDeclaredMethods": true,
+       "allPublicMethods": true
+    },
+     {
+      "type": "grpc.client.TestAssociatedKey",
+      "serializable": true,
+       "allDeclaredFields": true,
+       "allDeclaredConstructors": true,
+       "allPublicConstructors": true,
+       "allDeclaredMethods": true,
+       "allPublicMethods": true
     },
      {
       "type": "grpc.client.UnusableAggregator",
-      "serializable": true
+      "serializable": true,
+       "allDeclaredConstructors": true,
+       "allPublicConstructors": true,
+       "allDeclaredMethods": true,
+       "allPublicMethods": true
     },
      {
       "type": "grpc.client.Uppercase",
-      "serializable": true
+      "serializable": true,
+       "allDeclaredConstructors": true,
+       "allPublicConstructors": true,
+       "allDeclaredMethods": true,
+       "allPublicMethods": true
     }
   ]
 }

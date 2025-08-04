@@ -13,6 +13,7 @@ import com.tangosol.io.pof.PofWriter;
 import com.tangosol.io.pof.PortableObject;
 import com.tangosol.net.cache.KeyAssociation;
 import com.tangosol.util.ExternalizableHelper;
+import jakarta.json.bind.annotation.JsonbProperty;
 
 import java.io.DataInput;
 import java.io.DataOutput;
@@ -97,7 +98,9 @@ public class TestAssociatedKey
 
     // ----- data members ---------------------------------------------------
 
+    @JsonbProperty("key")
     private String m_sKey;
 
+    @JsonbProperty("associated")
     private String m_sAssociated;
     }
