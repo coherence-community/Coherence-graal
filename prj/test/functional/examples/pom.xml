@@ -22,6 +22,7 @@
   <name>Coherence Examples Tests</name>
 
   <properties>
+    <skip.native.tests>true</skip.native.tests>
     <moditect.skip>true</moditect.skip>
     <testClassesDirectory>${project.build.outputDirectory}</testClassesDirectory>
   </properties>

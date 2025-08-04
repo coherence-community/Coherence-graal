@@ -36,7 +36,6 @@
     <dependency-check.skip>true</dependency-check.skip>
     <skip.docs>true</skip.docs>
     <skip.sources>true</skip.sources>
-    <skip.native.build>false</skip.native.build>
   </properties>
 
   <build>
@@ -416,7 +415,7 @@
                 </goals>
                 <configuration>
                   <!-- All tests are run with failsafe when testing with native image -->
-                  <skip>${skip.native.build}</skip>
+                  <skip>${skip.native.tests}</skip>
                   <includes>
                     <include>**/*Test.java</include>
                     <include>**/*Tests.java</include>

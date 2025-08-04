@@ -132,6 +132,9 @@
     <maven.groovy.plugin.version>2.1.1</maven.groovy.plugin.version>
 
     <native.maven.plugin.version>0.10.6</native.maven.plugin.version>
+    <skip.native.build>false</skip.native.build>
+    <skip.native.tests>false</skip.native.tests>
+
 
     <!-- library dependency versions -->
     <asciidoctor.diagram.version>2.3.2</asciidoctor.diagram.version>
