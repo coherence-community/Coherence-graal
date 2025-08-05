@@ -7,6 +7,7 @@
 
 package com.tangosol.coherence.graal;
 
+import com.oracle.coherence.common.base.SimpleHolder;
 import com.oracle.coherence.common.internal.security.PeerX509TrustManager;
 import com.oracle.coherence.common.internal.security.PeerX509TrustManagerFactory;
 import com.oracle.coherence.common.internal.security.SecurityProvider;
@@ -303,7 +304,8 @@ public class CoherenceNativeImageFeature
             SerializationSupport.class,
             WrapperCollections.AbstractWrapperCollection.class,
             WrapperCollections.AbstractWrapperEntry.class,
-            WrapperCollections.AbstractWrapperMap.class);
+            WrapperCollections.AbstractWrapperMap.class,
+            SimpleHolder.class);
 
     /**
      * All types with these annotations will be included.
