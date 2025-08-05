@@ -193,10 +193,6 @@ public class CoherenceNativeImageFeature
         registerAllElements(Collections.EMPTY_MAP.getClass());
         RuntimeSerialization.register(Collections.EMPTY_SET.getClass());
         registerAllElements(Collections.EMPTY_SET.getClass());
-
-        registerAllElements(PeerX509TrustManagerFactory.class);
-        registerAllElements(PeerX509TrustManager.class);
-        registerAllElements(SecurityProvider.class);
         }
 
     @Override
