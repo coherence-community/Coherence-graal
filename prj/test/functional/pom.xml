@@ -291,6 +291,8 @@
                     <buildArg>--enable-monitoring=heapdump</buildArg>
                     <!-- Required for tests that use JFRs, for example, management tests -->
                     <buildArg>--enable-monitoring=jfr</buildArg>
+                    <!-- required for security features like JCA maybe TLS etc. -->
+                    <buildArg>-H:-EnableSecurityServicesFeature</buildArg>
                     <buildArg>--initialize-at-build-time=org.junit.platform.commons.support.scanning.DefaultClasspathScanner</buildArg>
 <!-- This is to capture a JFR of the native image compiler; it may break tests -->
 <!--                    <buildArg>-J-XX:StartFlightRecording=dumponexit=true</buildArg>-->

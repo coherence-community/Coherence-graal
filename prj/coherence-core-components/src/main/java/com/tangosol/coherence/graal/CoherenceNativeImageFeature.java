@@ -7,6 +7,9 @@
 
 package com.tangosol.coherence.graal;
 
+import com.oracle.coherence.common.internal.security.PeerX509TrustManager;
+import com.oracle.coherence.common.internal.security.PeerX509TrustManagerFactory;
+import com.oracle.coherence.common.internal.security.SecurityProvider;
 import com.oracle.coherence.common.schema.SchemaExtension;
 import com.oracle.coherence.common.schema.SchemaSource;
 
@@ -189,6 +192,10 @@ public class CoherenceNativeImageFeature
         registerAllElements(Collections.EMPTY_MAP.getClass());
         RuntimeSerialization.register(Collections.EMPTY_SET.getClass());
         registerAllElements(Collections.EMPTY_SET.getClass());
+
+        registerAllElements(PeerX509TrustManagerFactory.class);
+        registerAllElements(PeerX509TrustManager.class);
+        registerAllElements(SecurityProvider.class);
         }
 
     @Override
