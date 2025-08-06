@@ -96,7 +96,11 @@ public interface PropertyNameResolver {
       String resolvedName = null;
       for (Iterator<PropertyNameResolver> it = components.iterator(); resolvedName == null
         && it.hasNext(); ) {
-        resolvedName = it.next().resolve(parameterIdx, fromConstructor);
+        try {
+          resolvedName = it.next().resolve(parameterIdx, fromConstructor);
+          } catch (Exception e) {
+            throw new RuntimeException("Failed to resolve constructor: " + fromConstructor, e);
+          }
       }
       return resolvedName;
     }
@@ -105,7 +109,11 @@ public interface PropertyNameResolver {
       String resolvedName = null;
       for (Iterator<PropertyNameResolver> it = components.iterator(); resolvedName == null
         && it.hasNext(); ) {
-        resolvedName = it.next().resolve(parameterIdx, fromMethod);
+        try {
+          resolvedName = it.next().resolve(parameterIdx, fromMethod);
+        } catch (Exception e) {
+          throw new RuntimeException("Failed to resolve method: " + fromMethod, e);
+        }
       }
       return resolvedName;
     }
@@ -114,7 +122,11 @@ public interface PropertyNameResolver {
       String resolvedName = null;
       for (Iterator<PropertyNameResolver> it = components.iterator(); resolvedName == null
         && it.hasNext(); ) {
-        resolvedName = it.next().resolve(fromField);
+        try {
+          resolvedName = it.next().resolve(fromField);
+        } catch (Exception e) {
+          throw new RuntimeException("Failed to resolve field: " + fromField, e);
+        }
       }
       return resolvedName;
     }
@@ -123,7 +135,11 @@ public interface PropertyNameResolver {
       String resolvedName = null;
       for (Iterator<PropertyNameResolver> it = components.iterator(); resolvedName == null
         && it.hasNext(); ) {
-        resolvedName = it.next().resolve(fromMethod);
+        try {
+          resolvedName = it.next().resolve(fromMethod);
+        } catch (Exception e) {
+          throw new RuntimeException("Failed to resolve method: " + fromMethod, e);
+        }
       }
       return resolvedName;
     }

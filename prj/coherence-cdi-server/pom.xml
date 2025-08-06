@@ -97,6 +97,12 @@
         <artifactId>moditect-maven-plugin</artifactId>
       </plugin>
 
+      <plugin>
+        <groupId>org.graalvm.buildtools</groupId>
+        <artifactId>native-maven-plugin</artifactId>
+        <extensions>true</extensions>
+      </plugin>
+
       <!-- run integration tests *Tests.java and *IT.java -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

@@ -7,6 +7,7 @@
 
 package grpc.client;
 
+import com.oracle.bedrock.runtime.coherence.profiles.NativeImageProfile;
 import com.oracle.bedrock.testsupport.deferred.Eventually;
 
 import com.oracle.coherence.ai.DocumentChunk;
@@ -75,6 +76,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeEach;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.params.ParameterizedTest;
 
@@ -161,6 +163,15 @@ public abstract class AbstractGrpcClientIT
         }
 
     // ----- test methods ---------------------------------------------------
+
+    @Test
+    public void shouldBeNative() throws Exception
+        {
+        assertThat(NativeImageProfile.isEnabled(), is(true));
+        Stream<Arguments> serializers = serializers();
+        List<Arguments>   list        = serializers.toList();
+        System.out.println();
+        }
 
 
     @ParameterizedTest(name = "{index} serializer={0}")
@@ -2445,6 +2456,13 @@ public abstract class AbstractGrpcClientIT
         for (Map.Entry<String, SerializerFactory> entry : ctx.getSerializerMap().entrySet())
             {
             map.put(entry.getKey(), entry.getValue().createSerializer(loader));
+            }
+
+        if (NativeImageProfile.isEnabled())
+            {
+            // JSON currently fails in Native Image so exclude the JSON
+            // serializer when running tests with native image
+            map.remove("json");
             }
 
         return map.entrySet().stream()

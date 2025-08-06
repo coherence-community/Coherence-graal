@@ -32,6 +32,9 @@
 
     <mkdir dir="target/ca"/>
     <mkdir dir="target/classes/"/>
+    <delete>
+      <fileset dir="target/classes" includes="*.jks"/>
+    </delete>
 
     <!-- Create the CA key and cert -->
     <exec executable="openssl">
